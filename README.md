@@ -76,8 +76,8 @@ A aplicação oferece um ambiente interativo e protegido, no qual organizações
 #### 1. **Clonar o repositório**
 
 ```bash
-git clone https://github.com/feliperasilva/MQA
-cd MQA
+git clone https://github.com/feliperasilva/DoeCerto
+cd DoeCerto
 ```
 
 ---
