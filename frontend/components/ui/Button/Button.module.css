@@ -1,0 +1,67 @@
+.button {
+  background: var(--color-primary);
+  color: var(--color-background);   
+  font-family: var(--font-roboto), Arial, Helvetica, sans-serif;         
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+  outline: none;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1; /* Garante que o texto fique acima do círculo */
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  background: var(--color-accent);
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  transition:
+    width 0.5s cubic-bezier(.4,1.7,.7,1),
+    height 0.5s cubic-bezier(.4,1.7,.7,1);
+  z-index: -1; /* Fica atrás do conteúdo do botão */
+}
+
+.button:hover:not(.disabled)::before,
+.button:focus:not(.disabled)::before {
+  width: 300%;
+  height: 300%;
+}
+
+.button:hover:not(.disabled),
+.button:focus:not(.disabled) {
+  background: var(--color-primary);
+  color: var(--color-background);
+}
+
+.small {
+  padding: 0.5rem 1.3rem;
+  font-size: 0.92rem;
+}
+
+.medium {
+  padding: 0.75rem 2rem;
+  font-size: 24px;
+}
+
+.large {
+  padding: 1rem 2.6rem;
+  font-size: 1.23rem;
+}
+
+.disabled,
+.button:disabled {
+  background: #bdbdbd;
+  color: #eee;
+  cursor: not-allowed;
+  pointer-events: none;
+}
