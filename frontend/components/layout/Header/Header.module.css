@@ -5,6 +5,9 @@
     background: var(--color-surface);
     padding: 1%;
     height: 50px;
+    position: sticky;
+    z-index: 999;
+    top: 0;
 }
 
 .headerLogo {
