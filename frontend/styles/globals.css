@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6, .title {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: var(--coloraccent);
 }
 
 * {
