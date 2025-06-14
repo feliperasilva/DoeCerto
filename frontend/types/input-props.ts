@@ -2,7 +2,6 @@ type InputSize = "small" | "medium" | "large";
 type InputType = "text" | "password" | "email" | "number" | "tel";
 
 export type InputProps = {
-  children: React.ReactNode;
   size?: InputSize;
   placeholder?: string;
   value?: string | number; 
