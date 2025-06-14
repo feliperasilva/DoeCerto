@@ -1,18 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import styles from "./Button.module.css";
-
-type ButtonSize = "small" | "medium" | "large";
-
-type ButtonProps = {
-  children: React.ReactNode;
-  size?: ButtonSize;
-  href?: string; 
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
-  className?: string;
-  disabled?: boolean;
-};
+import { ButtonProps } from "@/types";
 
 export default function Button({
   children,
