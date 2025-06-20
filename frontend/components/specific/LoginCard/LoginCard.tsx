@@ -1,25 +1,37 @@
-import { Input } from "@/components";
+"use client";
+
+import { useState } from "react";
+import { Input, Checkbox, Button } from "@/components";
 import styles from "./LoginCard.module.css";
 
 export default function LoginCard() {
+  const [isChecked, setIsChecked] = useState(false);
+
   return (
     <div className={styles.loginCardContainer}>
       <div className={styles.loginFormWrapper}>
         <h2 className={styles.loginTitle}>Entrar Agora</h2>
         <form className={styles.loginForm}>
           <Input
+            label="Email"
             type="email"
-            placeholder="Email"
             className={styles.loginInput}
           />
           <Input
+            label="Senha"
             type="password"
-            placeholder="Password"
             className={styles.loginInput}
           />
-          <button type="submit" className={styles.loginButton}>
-            Login
-          </button>
+          <div className={styles.checkboxAndLinkWrapper}>
+            <Checkbox
+              label="Lembrar-me"
+              className={styles.rememberMeCheckbox}
+              onChange={() => setIsChecked(!isChecked)}
+              checked={isChecked}
+            />
+            <a href="#" className={styles.forgotPasswordLink}>Esqueceu sua senha?</a>
+          </div>
+          <Button className={styles.loginButton}>Entrar</Button>
         </form>
       </div>
       <div className={styles.cadastroWrapper}>
