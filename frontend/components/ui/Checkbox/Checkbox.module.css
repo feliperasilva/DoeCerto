@@ -1,0 +1,46 @@
+.checkboxContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.checkboxContainerLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.checkboxInput {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  border: 1px solid var(--color-primary);
+  border-radius: 2px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.checkboxInput:checked {
+  background-color: var(--color-primary);
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.checkboxInput:hover {
+  border-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.checkboxInput:checked:hover {
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.checkboxLabel {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-primary);
+    cursor: pointer;
+}
