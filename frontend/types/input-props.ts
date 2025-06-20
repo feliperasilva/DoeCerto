@@ -5,7 +5,7 @@ export type InputProps = {
   size?: InputSize;
   label?: string;
   placeholder?: string;
-  value?: string | number; 
+  value?: string | number;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   type?: InputType;
   className?: string;

@@ -23,7 +23,12 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classNames} tabIndex={disabled ? -1 : 0} aria-disabled={disabled}>
+      <Link
+        href={href}
+        className={classNames}
+        tabIndex={disabled ? -1 : 0}
+        aria-disabled={disabled}
+      >
         {children}
       </Link>
     );

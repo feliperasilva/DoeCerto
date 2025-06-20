@@ -1,5 +1,5 @@
-import { NavigationLink } from './link';
+import { NavigationLink } from "./link";
 
 export type HeaderProps = {
-    links?: NavigationLink[];
+  links?: NavigationLink[];
 };

@@ -1,14 +1,14 @@
-
 * {
-    box-sizing: border-box;
-    text-decoration: none;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
 }
 
-html, body {
-    height: 100%;
-    width: 100%;
+html,
+body {
+  height: 100%;
+  width: 100%;
 }
 
 body {
@@ -26,25 +26,34 @@ main {
   padding: 1%;
 }
 
-h1, h2, h3, h4, h5, h6, .title {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.title {
   font-family: var(--font-darker-grotesque), Arial, Helvetica, sans-serif;
 }
 
 :root {
-  --color-primary:      #6b39a7;  /* Roxo principal: títulos, botões, ícones */
-  --color-secondary:    #cfa6f7;  /* Roxo secundário/desbotado: contraste com a primária, hovers */
-  --color-accent:       #9540ff;  /* Roxo vibrante: hovers quando o primário está em destaque sobre secundário */
-  --color-surface:      #f5f5f5;  /* Fundo elevado: headers, cards, seções destacadas */
-  --color-neutral:      #999999;  /* Cinza claro: elementos não focados, bordas, ícones de baixo contraste */
-  --color-contrast:     #2c2c2c;  /* Cinza escuro: elementos focados, subtítulos, textos não-primários */
-  --color-background:   #ffffff;  /* Fundo base (fora da paleta principal) */
-  --mesh-gradient-welcome: 
-    radial-gradient(at 16% 65%, hsla(266,100%,89%,1) 0px, transparent 50%),
-    radial-gradient(at 16% 79%, hsla(266,100%,90%,1) 0px, transparent 50%),
-    radial-gradient(at 77% 38%, hsla(266,100%,90%,1) 0px, transparent 50%),
-    radial-gradient(at 24% 67%, hsla(266,100%,64%,1) 0px, transparent 50%),
-    radial-gradient(at 46% 18%, hsla(266,100%,90%,1) 0px, transparent 50%),
-    radial-gradient(at 99% 95%, hsla(266,96%,80%,1) 0px, transparent 50%);
+  --color-primary: #6b39a7; /* Roxo principal: títulos, botões, ícones */
+  --color-secondary: #cfa6f7; /* Roxo secundário/desbotado: contraste com a primária, hovers */
+  --color-accent: #9540ff; /* Roxo vibrante: hovers quando o primário está em destaque sobre secundário */
+  --color-surface: #f5f5f5; /* Fundo elevado: headers, cards, seções destacadas */
+  --color-neutral: #999999; /* Cinza claro: elementos não focados, bordas, ícones de baixo contraste */
+  --color-contrast: #2c2c2c; /* Cinza escuro: elementos focados, subtítulos, textos não-primários */
+  --color-background: #ffffff; /* Fundo base (fora da paleta principal) */
+  --mesh-gradient-welcome: radial-gradient(
+      at 16% 65%,
+      hsla(266, 100%, 89%, 1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 16% 79%, hsla(266, 100%, 90%, 1) 0px, transparent 50%),
+    radial-gradient(at 77% 38%, hsla(266, 100%, 90%, 1) 0px, transparent 50%),
+    radial-gradient(at 24% 67%, hsla(266, 100%, 64%, 1) 0px, transparent 50%),
+    radial-gradient(at 46% 18%, hsla(266, 100%, 90%, 1) 0px, transparent 50%),
+    radial-gradient(at 99% 95%, hsla(266, 96%, 80%, 1) 0px, transparent 50%);
 }
 
 /* Estilo de scrollbar slim e clean para Chrome, Edge e Safari */
@@ -54,7 +63,7 @@ h1, h2, h3, h4, h5, h6, .title {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(140,120,200,0.25);
+  background: rgba(140, 120, 200, 0.25);
   border-radius: 8px;
   transition: background 0.2s;
 }

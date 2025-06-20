@@ -11,29 +11,30 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  transition: color 0.3s ease;
+  transition: color 0.1s ease, background-color 0.1s ease, transform 0.1s ease;
 }
 
-/* Camada de overlay que se expande da esquerda para a direita */
 .button::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 0;
-  background: rgba(255, 255, 255, 0.1); /* Ou ajuste para outro tom suave */
-  transition: width 0.4s ease;
+  background: rgba(255, 255, 255, 0.1);
+  transition: width 0.2s ease;
   z-index: 1;
 }
 
-/* Garante que o texto fique acima do ::before */
 .button span {
   position: relative;
   z-index: 2;
 }
 
-/* Hover ativa a expansão da esquerda para a direita */
+.button:hover {
+  transform: scale(1.05);
+}
+
 .button:hover::before {
   width: 100%;
 }

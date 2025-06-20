@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Input, Checkbox, Button } from "@/components";
+import { Input, Checkbox, Button, InputPassword } from "@/components";
 import styles from "./LoginCard.module.css";
 
 export default function LoginCard() {
@@ -12,16 +12,8 @@ export default function LoginCard() {
       <div className={styles.loginFormWrapper}>
         <h2 className={styles.loginTitle}>Entrar Agora</h2>
         <form className={styles.loginForm}>
-          <Input
-            label="Email"
-            type="email"
-            className={styles.loginInput}
-          />
-          <Input
-            label="Senha"
-            type="password"
-            className={styles.loginInput}
-          />
+          <Input label="Email" type="email" className={styles.loginInput} />
+          <InputPassword label="Senha" className={styles.loginInput} />
           <div className={styles.checkboxAndLinkWrapper}>
             <Checkbox
               label="Lembrar-me"
@@ -29,13 +21,19 @@ export default function LoginCard() {
               onChange={() => setIsChecked(!isChecked)}
               checked={isChecked}
             />
-            <a href="#" className={styles.forgotPasswordLink}>Esqueceu sua senha?</a>
+            <a href="#" className={styles.forgotPasswordLink}>
+              Esqueceu sua senha?
+            </a>
           </div>
-          <Button className={styles.loginButton}>Entrar</Button>
+          <Button className={styles.loginButton} size="fullWidth">
+            Entrar
+          </Button>
         </form>
       </div>
       <div className={styles.cadastroWrapper}>
-        <p className={styles.cadastroMessage}>Não tem uma conta? <br /> Cadastre-se agora!</p>
+        <p className={styles.cadastroMessage}>
+          Não tem uma conta? <br /> Cadastre-se agora!
+        </p>
         <button className={styles.cadastroButton}>Cadastre-se</button>
       </div>
     </div>
