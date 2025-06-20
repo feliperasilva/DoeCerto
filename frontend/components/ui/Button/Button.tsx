@@ -11,10 +11,12 @@ export default function Button({
   type = "button",
   className = "",
   disabled = false,
+  variant = "primary",
 }: ButtonProps) {
   const classNames = [
     styles.button,
     styles[size],
+    styles[variant],
     className,
     disabled ? styles.disabled : "",
   ]
@@ -41,7 +43,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
     >
-      {children}
+      <span className={styles.buttonContent}>{children}</span>
     </button>
   );
 }

@@ -33,7 +33,7 @@
 }
 
 .checkboxContainerLabel:hover .customCheckbox {
-  border-color: var(--color-accent);
+  border-color: var(--color-contrast);
   transform: scale(1.1);
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
   filter: brightness(1.1);

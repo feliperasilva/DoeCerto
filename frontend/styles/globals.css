@@ -38,7 +38,7 @@ h6,
 
 :root {
   --color-primary: #6b39a7; /* Roxo principal: títulos, botões, ícones */
-  --color-secondary: #cfa6f7; /* Roxo secundário/desbotado: contraste com a primária, hovers */
+  --color-secondary: #ebd2ff; /* Roxo secundário/desbotado: contraste com a primária, hovers */
   --color-accent: #9540ff; /* Roxo vibrante: hovers quando o primário está em destaque sobre secundário */
   --color-surface: #f5f5f5; /* Fundo elevado: headers, cards, seções destacadas */
   --color-neutral: #999999; /* Cinza claro: elementos não focados, bordas, ícones de baixo contraste */

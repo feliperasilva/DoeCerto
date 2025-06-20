@@ -6,7 +6,7 @@
 
 .inputLabel {
   margin-bottom: 2px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--color-contrast);
   transition: color 0.2s ease, font-size 0.2s ease;
@@ -39,7 +39,7 @@
 
 .inputContainer:focus-within .inputLabel {
   color: var(--color-accent);
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .input[type="email"] {

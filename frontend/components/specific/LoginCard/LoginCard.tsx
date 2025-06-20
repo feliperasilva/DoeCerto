@@ -34,7 +34,13 @@ export default function LoginCard() {
         <p className={styles.cadastroMessage}>
           Não tem uma conta? <br /> Cadastre-se agora!
         </p>
-        <button className={styles.cadastroButton}>Cadastre-se</button>
+        <Button
+          className={styles.cadastroButton}
+          size="fullWidth"
+          variant="secondary"
+        >
+          Cadastre-se
+        </Button>
       </div>
     </div>
   );
