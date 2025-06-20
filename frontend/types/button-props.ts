@@ -1,4 +1,4 @@
-type ButtonSize = "small" | "medium" | "large";
+type ButtonSize = "small" | "medium" | "large" | "fullWidth";
 
 export type ButtonProps = {
   children: React.ReactNode;
