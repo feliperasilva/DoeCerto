@@ -3,6 +3,7 @@ type InputType = "text" | "password" | "email" | "number" | "tel";
 
 export type InputProps = {
   size?: InputSize;
+  label?: string;
   placeholder?: string;
   value?: string | number; 
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
