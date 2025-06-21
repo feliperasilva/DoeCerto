@@ -1,18 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import styles from "./Button.module.css";
-
-type ButtonSize = "small" | "medium" | "large";
-
-type ButtonProps = {
-  children: React.ReactNode;
-  size?: ButtonSize;
-  href?: string; 
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
-  className?: string;
-  disabled?: boolean;
-};
+import { ButtonProps } from "@/types";
 
 export default function Button({
   children,
@@ -22,10 +11,12 @@ export default function Button({
   type = "button",
   className = "",
   disabled = false,
+  variant = "primary",
 }: ButtonProps) {
   const classNames = [
     styles.button,
     styles[size],
+    styles[variant],
     className,
     disabled ? styles.disabled : "",
   ]
@@ -34,7 +25,12 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classNames} tabIndex={disabled ? -1 : 0} aria-disabled={disabled}>
+      <Link
+        href={href}
+        className={classNames}
+        tabIndex={disabled ? -1 : 0}
+        aria-disabled={disabled}
+      >
         {children}
       </Link>
     );
@@ -47,7 +43,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
     >
-      {children}
+      <span className={styles.buttonContent}>{children}</span>
     </button>
   );
 }

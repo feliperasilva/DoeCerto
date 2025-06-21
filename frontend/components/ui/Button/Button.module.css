@@ -1,46 +1,42 @@
 .button {
   background: var(--color-primary);
-  color: var(--color-background);   
-  font-family: var(--font-roboto), Arial, Helvetica, sans-serif;         
+  color: var(--color-background);
+  font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
   font-weight: 700;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: color 0.2s;
   outline: none;
   display: inline-block;
   text-align: center;
   position: relative;
   overflow: hidden;
-  z-index: 1; /* Garante que o texto fique acima do círculo */
+  transition: color 0.1s ease, background-color 0.1s ease, transform 0.2s ease;
+}
+
+.button span {
+  position: relative;
+  z-index: 2;
 }
 
 .button::before {
   content: "";
   position: absolute;
+  top: 0;
   left: 0;
-  bottom: 0;
+  height: 100%;
   width: 0;
-  height: 0;
   background: var(--color-accent);
-  border-radius: 50%;
-  transform: translate(-50%, 50%);
-  transition:
-    width 0.5s cubic-bezier(.4,1.7,.7,1),
-    height 0.5s cubic-bezier(.4,1.7,.7,1);
-  z-index: -1; /* Fica atrás do conteúdo do botão */
+  transition: width 0.2s ease;
+  z-index: 1;
 }
 
-.button:hover:not(.disabled)::before,
-.button:focus:not(.disabled)::before {
-  width: 300%;
-  height: 300%;
+.button:hover {
+  transform: scale(1.05);
 }
 
-.button:hover:not(.disabled),
-.button:focus:not(.disabled) {
-  background: var(--color-primary);
-  color: var(--color-background);
+.button:hover::before {
+  width: 100%;
 }
 
 .small {
@@ -58,10 +54,49 @@
   font-size: 1.23rem;
 }
 
+.fullWidth {
+  width: 100%;
+  font-size: 16px;
+  height: 40px;
+  border-radius: 5px;
+}
+
 .disabled,
 .button:disabled {
   background: #bdbdbd;
   color: #eee;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* variant secondary */
+
+.secondary {
+  background-color: var(--color-background);
+  color: var(--color-primary);
+}
+
+.secondary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background: var(--color-secondary);
+  transition: width 0.2s ease;
+  z-index: 1;
+}
+
+.secondary span {
+  position: relative;
+  z-index: 2;
+}
+
+.secondary:hover {
+  transform: scale(1.05);
+}
+
+.secondary:hover::before {
+  width: 100%;
 }

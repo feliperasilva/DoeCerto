@@ -1,0 +1,109 @@
+.loginCardContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 400px;
+  width: 600px;
+  box-sizing: content-box;
+  box-shadow: 0 0 4px var(--color-accent);
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.loginFormContainer {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1;
+  background-color: var(--color-secondary);
+  border-radius: 20px 0 0 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.loginFormWrapper,
+.signupWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 270px;
+}
+
+.signupContainer {
+  display: flex;
+  flex-direction: column;
+  grid-column: 2;
+  background-color: var(--color-primary);
+  border-radius: 0 20px 20px 0;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.loginTitle {
+  font-size: 36px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.loginInput {
+  margin-bottom: 10px;
+}
+
+.checkboxAndLinkWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.forgotPasswordLink {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.signupTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--color-background);
+}
+
+.signupMessage {
+  font-size: 14px;
+  color: var(--color-background);
+  font-weight: 700;
+  text-align: center;
+}
+
+.signupToggleMessage {
+  font-size: 12px;
+  color: var(--color-background);
+  font-weight: 700;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.signupButton {
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  background-color: var(--color-background);
+  color: var(--color-primary);
+}
