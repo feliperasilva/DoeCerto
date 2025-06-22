@@ -11,10 +11,7 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <div className={styles.headerLogo}>
-        <Logo />
-        <span className={styles.headerLogoText}>DoeCerto</span>
-      </div>
+      <Logo />
       <nav className={styles.headerNav}>
         {links.map((link, idx) => (
           <Link key={idx} href={link.href} className={styles.headerNavLink}>

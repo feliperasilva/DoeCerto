@@ -1,5 +1,5 @@
 type InputSize = "small" | "medium" | "large";
-type InputType = "text" | "password" | "email" | "number" | "tel";
+type InputType = "text" | "password" | "email" | "number" | "tel" | "cnpj";
 
 export type InputProps = {
   size?: InputSize;
