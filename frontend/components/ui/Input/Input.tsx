@@ -1,54 +1,45 @@
 "use client";
 
-import Cleave from "cleave.js/react";
 import styles from "./Input.module.css";
 import type { InputProps } from "@/types";
 
 export default function Input({
+  size, // não repassar para o input nativo (conflito)
   type = "text",
   placeholder = "",
   onChange,
   value,
   className = "",
   disabled = false,
-  id = "",
+  id,
+  name,
   label = "",
   required = false,
+  autoComplete,
+  ...rest
 }: InputProps) {
-  const classNames = [styles.input, className].filter(Boolean).join(" ");
+  const classNames = [styles.input, className, size && styles[size]]
+    .filter(Boolean)
+    .join(" ");
 
-  const isCnpj = type === "cnpj";
+  const inputId = id || name;
 
   return (
-    <label htmlFor={id} className={styles.inputContainer}>
+    <label htmlFor={inputId} className={styles.inputContainer}>
       {label && <span className={styles.inputLabel}>{label}</span>}
-      {isCnpj ? (
-        <Cleave
-          id={id}
-          placeholder={placeholder}
-          options={{
-            delimiters: [".", ".", "/", "-"],
-            blocks: [2, 3, 3, 4, 2],
-            numericOnly: true,
-          }}
-          value={value}
-          onChange={onChange}
-          className={classNames}
-          disabled={disabled}
-          required={required}
-        />
-      ) : (
-        <input
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          className={classNames}
-          disabled={disabled}
-          id={id}
-          required={required}
-        />
-      )}
+      <input
+        id={inputId}
+        name={name}
+        type={type === "cnpj" ? "text" : type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className={classNames}
+        disabled={disabled}
+        required={required}
+        autoComplete={autoComplete ?? type}
+        {...rest} // passar o resto das props, sem size
+      />
     </label>
   );
 }
