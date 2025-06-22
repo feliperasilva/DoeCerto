@@ -10,23 +10,6 @@
   top: 0;
 }
 
-.headerLogo {
-  display: flex;
-  align-items: center;
-  font-size: 36px;
-  font-weight: bold;
-  color: var(--color-primary);
-  gap: 5px;
-}
-
-.headerLogoText {
-  font-family: var(--font-darker-grotesque), Arial, Helvetica, sans-serif;
-  font-weight: 900;
-  line-height: 1;
-  position: relative;
-  top: -3px;
-}
-
 .headerNav {
   display: flex;
   gap: 24px;
