@@ -1,15 +1,22 @@
 type InputSize = "small" | "medium" | "large";
-type InputType = "text" | "password" | "email" | "number" | "tel" | "cnpj";
 
-export type InputProps = {
+type InputType =
+  | "text"
+  | "password"
+  | "email"
+  | "number"
+  | "tel"
+  | "url"
+  | "date"
+  | "cnpj";
+
+export type InputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size" | "type" | "name" | "autocomplete"
+> & {
   size?: InputSize;
-  label?: string;
-  placeholder?: string;
-  value?: string | number;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   type?: InputType;
-  className?: string;
-  disabled?: boolean;
-  id?: string;
-  required?: boolean;
+  label?: string;
+  name: string;
+  autocomplete?: string; // aqui, tipo simples string para flexibilidade
 };
