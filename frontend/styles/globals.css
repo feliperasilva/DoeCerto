@@ -44,6 +44,8 @@ h6,
   --color-neutral: #999999; /* Cinza claro: elementos não focados, bordas, ícones de baixo contraste */
   --color-contrast: #2c2c2c; /* Cinza escuro: elementos focados, subtítulos, textos não-primários */
   --color-background: #ffffff; /* Fundo base (fora da paleta principal) */
+  --color-error: #c53030; /* Vermelho padrão - mais escuro, menos vibrante */
+  --color-error-accent: #ef476f; /* Vermelho vibrante, mais claro, para hover/focus */
   --mesh-gradient-welcome: radial-gradient(
       at 16% 65%,
       hsla(266, 100%, 89%, 1) 0px,
