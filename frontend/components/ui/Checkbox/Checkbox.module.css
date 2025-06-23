@@ -65,3 +65,11 @@
   color: var(--color-primary);
   cursor: pointer;
 }
+
+.customCheckbox svg {
+  display: none;
+}
+
+.checkboxInput:checked + .customCheckbox svg {
+  display: inline;
+}
