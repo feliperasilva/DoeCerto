@@ -2,10 +2,17 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 1px;
+}
+
+.labelErrorWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
 }
 
 .inputLabel {
-  margin-bottom: 2px;
   font-size: 14px;
   font-weight: 700;
   color: var(--color-contrast);
@@ -40,4 +47,27 @@
 .inputContainer:focus-within .inputLabel {
   color: var(--color-accent);
   font-size: 16px;
+}
+
+.error .inputLabel,
+.error .input {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.error .inputLabel:focus,
+.error .input:focus {
+  border-color: var(--color-error-accent);
+  color: var(--color-error-accent);
+  box-shadow: 0 0 10px var(--color-error-accent);
+}
+
+.errorText {
+  color: var(--color-error);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.error:focus-within .inputLabel {
+  color: var(--color-error-accent);
 }
