@@ -1,10 +1,12 @@
+"use client";
+
 import React from "react";
 import { FaCheck } from "react-icons/fa";
 import styles from "./Checkbox.module.css";
 import type { CheckboxProps } from "@/types";
 
-export default React.forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ checked, onChange, label, id, name, className = "" }, ref) => {
+const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
+  ({ label, id, name, className = "", ...rest }, ref) => {
     return (
       <div className={`${styles.checkboxContainer} ${className}`}>
         <label htmlFor={id} className={styles.checkboxContainerLabel}>
@@ -12,13 +14,13 @@ export default React.forwardRef<HTMLInputElement, CheckboxProps>(
             type="checkbox"
             id={id}
             name={name}
-            checked={checked}
-            onChange={onChange}
-            className={styles.checkboxInput}
             ref={ref}
+            className={styles.checkboxInput}
+            {...rest}
           />
           <span className={styles.customCheckbox}>
-            {checked && <FaCheck />}
+            {/* ícone sempre visível se o input estiver marcado */}
+            <FaCheck className={styles.checkIcon} />
           </span>
           {label && <span className={styles.checkboxLabel}>{label}</span>}
         </label>
@@ -26,3 +28,6 @@ export default React.forwardRef<HTMLInputElement, CheckboxProps>(
     );
   }
 );
+
+Checkbox.displayName = "Checkbox";
+export default Checkbox;
