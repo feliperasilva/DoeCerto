@@ -1,5 +1,6 @@
 type InputSize = "small" | "medium" | "large";
 
+type InputMaskType = "cnpj" | "telefone" | "cep";
 type InputType =
   | "text"
   | "password"
@@ -7,8 +8,7 @@ type InputType =
   | "number"
   | "tel"
   | "url"
-  | "date"
-  | "cnpj";
+  | "date";
 
 export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -17,6 +17,8 @@ export type InputProps = Omit<
   size?: InputSize;
   type?: InputType;
   label?: string;
+  error?: string;
   name: string;
   autocomplete?: string; // aqui, tipo simples string para flexibilidade
+  inputMask?: InputMaskType;
 };
