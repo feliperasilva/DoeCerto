@@ -1,52 +1,99 @@
 "use client";
 
-import Cleave from "cleave.js/react";
+import React from "react";
+import { InputMask } from "@react-input/mask";
 import styles from "./Input.module.css";
 import type { InputProps } from "@/types";
 
 export default function Input({
+  size,
   type = "text",
   placeholder = "",
   onChange,
   value,
   className = "",
   disabled = false,
-  id = "",
+  id,
+  name,
   label = "",
   required = false,
-}: InputProps) {
-  const classNames = [styles.input, className].filter(Boolean).join(" ");
+  autoComplete,
+  error,
+  inputMask, // string como "cnpj", "phone", etc.
+  ...rest
+}: InputProps & { inputMask?: string }) {
+  const inputId = id || name;
 
-  const isCnpj = type === "cnpj";
+  const containerClassNames = [styles.inputContainer, error ? styles.error : ""]
+    .filter(Boolean)
+    .join(" ");
+
+  const inputClassNames = [
+    styles.input,
+    size && styles[size],
+    className,
+    error ? styles.error : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const labelClassNames = styles.inputLabel;
+
+  const maskMap: Record<
+    string,
+    { mask: string; replacement: Record<string, RegExp> }
+  > = {
+    cnpj: {
+      mask: "99.999.999/9999-99",
+      replacement: { "9": /\d/ },
+    },
+    phone: {
+      mask: "(99) 99999-9999",
+      replacement: { "9": /\d/ },
+    },
+    cep: {
+      mask: "99999-999",
+      replacement: { "9": /\d/ },
+    },
+  };
+
+  const selectedMask = inputMask ? maskMap[inputMask] : null;
 
   return (
-    <label htmlFor={id} className={styles.inputContainer}>
-      {label && <span className={styles.inputLabel}>{label}</span>}
-      {isCnpj ? (
-        <Cleave
-          id={id}
-          placeholder={placeholder}
-          options={{
-            delimiters: [".", ".", "/", "-"],
-            blocks: [2, 3, 3, 4, 2],
-            numericOnly: true,
-          }}
+    <label htmlFor={inputId} className={containerClassNames}>
+      <div className={styles.labelErrorWrapper}>
+        {label && <span className={labelClassNames}>{label}</span>}
+        {error && <span className={styles.errorText}>{error}</span>}
+      </div>
+
+      {selectedMask ? (
+        <InputMask
+          id={inputId}
+          name={name}
+          mask={selectedMask.mask}
+          replacement={selectedMask.replacement}
           value={value}
           onChange={onChange}
-          className={classNames}
+          className={inputClassNames}
+          placeholder={placeholder || selectedMask.mask}
           disabled={disabled}
           required={required}
+          autoComplete={autoComplete ?? "off"}
+          {...rest}
         />
       ) : (
         <input
+          id={inputId}
+          name={name}
           type={type}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={classNames}
+          className={inputClassNames}
           disabled={disabled}
-          id={id}
           required={required}
+          autoComplete={autoComplete ?? type}
+          {...rest}
         />
       )}
     </label>

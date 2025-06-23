@@ -1,0 +1,33 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkboxAndLinkWrapper {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.forgotPasswordLink {
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.forgotPasswordLink:hover {
+  scale: (1.02);
+  color: var(--color-accent);
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.signupButton {
+  margin-top: 5px;
+}

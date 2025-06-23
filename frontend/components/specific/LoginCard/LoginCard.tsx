@@ -2,14 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Input,
-  Checkbox,
-  Button,
-  InputPassword,
-  ToggleUser,
-  Logo,
-} from "@/components";
+import { Button, ToggleUser, Logo } from "@/components";
+import { LoginForm, SignupDonorForm, SignupOngForm } from "./forms";
 import type { UserType } from "@/types";
 import styles from "./LoginCard.module.css";
 
@@ -17,15 +11,10 @@ type PanelState = "initial" | "signup-donor" | "signup-ong";
 
 export default function LoginCard() {
   const [panelState, setPanelState] = useState<PanelState>("initial");
-  const [isChecked, setIsChecked] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserType>("donor");
 
   const handleSignupClick = () => {
-    if (selectedUser === "donor") {
-      setPanelState("signup-donor");
-    } else {
-      setPanelState("signup-ong");
-    }
+    setPanelState(selectedUser === "donor" ? "signup-donor" : "signup-ong");
   };
 
   const handleBack = () => {
@@ -34,36 +23,26 @@ export default function LoginCard() {
 
   return (
     <div className={styles.loginCardContainer}>
-      {/* c1: LOGIN */}
-      <motion.div
-        className={`${styles.panel} ${styles.panel1}`}
-        animate={{
-          x: panelState === "initial" ? "0%" : "-10%",
-          zIndex: panelState === "initial" ? 2 : 0,
-        }}
-        transition={{ type: "spring", stiffness: 60, damping: 14 }}
-      >
-        <div className={styles.panelContent}>
-          <h1 className={styles.loginTitle}>Entrar Agora</h1>
-          <form className={styles.loginForm}>
-            <Input id="login-email" label="Email" type="email" />
-            <InputPassword id="login-password" label="Senha" />
-            <div className={styles.checkboxAndLinkWrapper}>
-              <Checkbox
-                label="Lembrar-me"
-                onChange={() => setIsChecked(!isChecked)}
-                checked={isChecked}
-              />
-              <a href="#" className={styles.forgotPasswordLink}>
-                Esqueceu sua senha?
-              </a>
+      {/* Panel 1: Login (agora desmontável) */}
+      <AnimatePresence mode="wait">
+        {panelState === "initial" && (
+          <motion.div
+            key="loginPanel"
+            className={`${styles.panel} ${styles.panel1}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className={styles.panelContent}>
+              <h1 className={styles.loginTitle}>Entrar Agora</h1>
+              <LoginForm />
             </div>
-            <Button size="fullWidth">Entrar</Button>
-          </form>
-        </div>
-      </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* c2: SELETOR ou LOGIN NOVO + BOTÃO VOLTAR */}
+      {/* Panel 2: Seletor / Retorno */}
       <motion.div
         className={`${styles.panel} ${styles.panel2}`}
         animate={{
@@ -132,10 +111,11 @@ export default function LoginCard() {
         </AnimatePresence>
       </motion.div>
 
-      {/* c3: CADASTRO (monta e desmonta) */}
-      <AnimatePresence>
+      {/* Panel 3: Cadastro */}
+      <AnimatePresence mode="wait">
         {(panelState === "signup-donor" || panelState === "signup-ong") && (
           <motion.div
+            key={panelState}
             className={`${styles.panel} ${styles.panel3}`}
             initial={{ x: "100%", opacity: 0 }}
             animate={{ x: "0%", opacity: 1 }}
@@ -148,35 +128,11 @@ export default function LoginCard() {
                   ? "Cadastro Doador"
                   : "Cadastro ONG"}
               </h1>
-              <form className={styles.signupForm}>
-                {panelState === "signup-donor" ? (
-                  <>
-                    <Input id="donor-name" label="Nome" type="text" />
-                    <Input id="donor-email" label="Email" type="email" />
-                    <InputPassword id="donor-password" label="Senha" />
-                    <Input
-                      id="donor-confirm-password"
-                      type="password"
-                      label="Confirmar Senha"
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Input id="ong-name" label="Nome da ONG" type="text" />
-                    <Input id="ong-cnpj" label="CNPJ" type="cnpj" />
-                    <Input id="ong-email" label="Email" type="email" />
-                    <InputPassword id="ong-password" label="Senha" />
-                    <Input
-                      id="ong-confirm-password"
-                      label="Confirmar Senha"
-                      type="password"
-                    />
-                  </>
-                )}
-                <Button size="fullWidth" className={styles.sgupButton}>
-                  Cadastrar
-                </Button>
-              </form>
+              {panelState === "signup-donor" ? (
+                <SignupDonorForm />
+              ) : (
+                <SignupOngForm />
+              )}
             </div>
           </motion.div>
         )}
