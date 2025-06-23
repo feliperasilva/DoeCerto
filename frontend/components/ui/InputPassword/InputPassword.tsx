@@ -6,7 +6,7 @@ import styles from "./InputPassword.module.css";
 import type { InputProps } from "@/types";
 
 export default function InputPassword({
-  size, // extraia para não passar para input
+  size, // extraído para não repassar
   type = "password",
   placeholder = "",
   onChange,
@@ -18,18 +18,34 @@ export default function InputPassword({
   label = "",
   required = false,
   autoComplete,
+  error,
   ...rest
 }: InputProps) {
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
   const inputType = type === "password" && isPasswordVisible ? "text" : type;
-  const classNames = [styles.input, className].filter(Boolean).join(" ");
 
   const inputId = id || name;
 
+  const containerClassNames = [styles.inputContainer, error ? styles.error : ""]
+    .filter(Boolean)
+    .join(" ");
+
+  const inputClassNames = [
+    styles.input,
+    size && styles[size],
+    className,
+    error ? styles.error : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <label htmlFor={inputId} className={styles.inputContainer}>
-      {label && <span className={styles.inputLabel}>{label}</span>}
+    <label htmlFor={inputId} className={containerClassNames}>
+      <div className={styles.labelErrorWrapper}>
+        {label && <span className={styles.inputLabel}>{label}</span>}
+        {error && <span className={styles.errorText}>{error}</span>}
+      </div>
       <div className={styles.inputWithToggle}>
         <input
           id={inputId}
@@ -38,11 +54,11 @@ export default function InputPassword({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={classNames}
+          className={inputClassNames}
           disabled={disabled}
           required={required}
           autoComplete={autoComplete ?? "current-password"}
-          {...rest} // size não vai estar aqui, pois extraímos acima
+          {...rest}
         />
         {type === "password" && (
           <button
