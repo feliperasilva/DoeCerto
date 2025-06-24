@@ -8,6 +8,8 @@ class Ong extends Model
 {
     protected $table = 'ongs';
 
+    protected $primaryKey = 'ong_id';
+
     protected $fillable = [
         'ong_name',
         'ong_email',
