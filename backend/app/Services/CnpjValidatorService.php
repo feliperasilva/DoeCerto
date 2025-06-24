@@ -6,16 +6,18 @@ use Illuminate\Support\Facades\Http;
 
 class CnpjValidatorService
 {
-    public function validate(string $cnpj): bool
+    public static function validate(string $cnpj): bool
     {
         
-        $response = Http::get("https://publica.cnpj.ws/cnpj/{$cnpj}");
+        $cnpj = preg_replace('/\D/', '', $cnpj);
+
+        $response = Http::get("https://brasilapi.com.br/api/cnpj/v1/{$cnpj}");
 
         if ($response->successful()) {
             $data = $response->json();
 
-            
-            return !empty($data) && isset($data['status']) && $data['status'] === 'OK';
+           
+            return !empty($data) && isset($data['cnpj']) && str_replace(['.', '/', '-'], '', $data['cnpj']) === $cnpj;
         }
 
         return false;
