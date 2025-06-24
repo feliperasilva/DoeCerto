@@ -25,7 +25,6 @@ class OngController extends Controller
             'ong_email' => 'required|email|unique:ongs,ong_email',
             'ong_password' => 'required|string|min:8|confirmed',
             'ong_cnpj' => 'required|cnpj|unique:ongs,ong_cnpj',
-            'ong_description' => 'nullable|string|max:255',
         ]);
 
         $validated['ong_password'] = bcrypt($validated['ong_password']);

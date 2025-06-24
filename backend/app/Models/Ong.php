@@ -13,7 +13,6 @@ class Ong extends Model
         'ong_email',
         'ong_password',
         'ong_cnpj',
-        'ong_description',
     ];
 
     protected $hidden = [

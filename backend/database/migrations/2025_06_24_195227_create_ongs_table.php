@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('ong_name');
             $table->string('ong_email')->unique();
             $table->string('ong_password');
-            $table->string('ong_description')->nullable();
             $table->string('ong_cnpj');
             $table->timestamps();
         });
