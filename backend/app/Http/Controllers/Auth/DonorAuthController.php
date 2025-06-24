@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donor;
+use Faker\Provider\ar_EG\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class DonorAuthController extends Controller
 {
@@ -61,5 +63,29 @@ class DonorAuthController extends Controller
 
     public function logout(Request $request) {
 
+        $token = $request->bearerToken();
+
+        if (!$token) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'No token provided.',
+            ], 401);
+        }
+
+        $acess_token = PersonalAccessToken::findToken($token);
+
+        if (!$acess_token) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Invalid token.',
+            ], 401);
+        }
+
+        $acess_token->delete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'Logout successful.',
+        ]);
     }
 }
