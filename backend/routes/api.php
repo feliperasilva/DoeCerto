@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DonorController;
+use App\Http\Controllers\OngController;
 use App\Http\Controllers\Auth\DonorAuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,4 +13,6 @@ Route::prefix('/auth')->group(function () {
 });
 
 Route::apiResource('donors', DonorController::class);
+
+Route::apiResource('ongs', OngController::class);
 
