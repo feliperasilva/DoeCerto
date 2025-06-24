@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ong;
+use App\Services\CnpjValidatorService;
 use Illuminate\Http\Request;
 
 class OngController extends Controller
@@ -20,17 +21,27 @@ class OngController extends Controller
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'ong_name' => 'required|string|max:255',
             'ong_email' => 'required|email|unique:ongs,ong_email',
             'ong_password' => 'required|string|min:8|confirmed',
-            'ong_cnpj' => 'required|cnpj|unique:ongs,ong_cnpj',
+            'ong_cnpj' => 'required|string|unique:ongs,ong_cnpj',
         ]);
 
-        $validated['ong_password'] = bcrypt($validated['ong_password']);
-        return Ong::create($validated);
-    }
+        
+        if (!CnpjValidatorService::validate($validated['ong_cnpj'])) {
+            return response()->json([
+                'message' => 'O CNPJ informado não é válido ou não foi encontrado na Receita Federal.'
+            ], 422);
+        }
 
+        $validated['ong_password'] = bcrypt($validated['ong_password']);
+
+        $ong = Ong::create($validated);
+
+        return response()->json($ong, 201);
+    }
     /**
      * Display the specified resource.
      */
