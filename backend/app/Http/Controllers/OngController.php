@@ -12,7 +12,7 @@ class OngController extends Controller
      */
     public function index()
     {
-        //
+        return Ong::all();
     }
 
     /**
