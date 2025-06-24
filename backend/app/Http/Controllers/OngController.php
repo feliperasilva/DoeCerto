@@ -36,7 +36,7 @@ class OngController extends Controller
      */
     public function show(Ong $ong)
     {
-        //
+        return Ong::findOrFail($ong->ong_id);
     }
 
     /**
