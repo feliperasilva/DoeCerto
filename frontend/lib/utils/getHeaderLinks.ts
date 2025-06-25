@@ -5,5 +5,12 @@ export function getHeaderLinks(pathname: string): NavigationLink[] {
     return [{ label: "Login", href: "/login" }];
   }
 
+  if (pathname === "/home") {
+    return [
+      { label: "Home", href: "/home" },
+      { label: "Logout" }, // Sem href, será renderizado como botão
+    ];
+  }
+
   return [];
 }

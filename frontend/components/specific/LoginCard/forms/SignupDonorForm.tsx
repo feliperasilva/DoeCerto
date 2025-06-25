@@ -1,12 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
+import api from "@/services/api";
 import { Input, InputPassword, Button } from "@/components";
 import { signupDonorSchema, SignupDonorSchema } from "@/lib";
 import styles from "./forms.module.css";
 
-export default function SignupDonorForm() {
+type SignupDonorFormProps = {
+  onSuccess: () => void;
+};
+
+export default function SignupDonorForm({ onSuccess }: SignupDonorFormProps) {
   const [formData, setFormData] = useState<SignupDonorSchema>({
     name: "",
     email: "",
@@ -22,9 +26,9 @@ export default function SignupDonorForm() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Validação em tempo real
     const partialData = { ...formData, [name]: value };
     const result = signupDonorSchema.safeParse(partialData);
+
     if (!result.success) {
       const issue = result.error.issues.find((i) => i.path[0] === name);
       setFormErrors((prev) => ({ ...prev, [name]: issue?.message }));
@@ -35,6 +39,7 @@ export default function SignupDonorForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const result = signupDonorSchema.safeParse(formData);
     if (!result.success) {
       const newErrors: typeof formErrors = {};
@@ -47,10 +52,35 @@ export default function SignupDonorForm() {
     }
 
     try {
-      const response = await axios.post("/api/auth/signup/donor", formData);
+      const payload = {
+        don_name: formData.name,
+        don_email: formData.email,
+        don_password: formData.password,
+        don_password_confirmation: formData.confirmPassword, // necessário para o Laravel
+      };
+
+      const response = await api.post("/api/auth/register", payload);
       console.log("Cadastro Doador:", response.data);
-    } catch (error) {
-      console.error("Erro no cadastro do doador:", error);
+      onSuccess();
+    } catch (error: any) {
+      if (error.response?.data?.errors) {
+        const serverErrors = error.response.data.errors;
+        const formattedErrors: typeof formErrors = {};
+
+        Object.keys(serverErrors).forEach((field) => {
+          if (field === "don_email") {
+            formattedErrors.email = "Este e-mail já está em uso.";
+          } else if (field === "don_password") {
+            formattedErrors.password = serverErrors[field][0];
+          } else if (field === "don_name") {
+            formattedErrors.name = serverErrors[field][0];
+          }
+        });
+
+        setFormErrors(formattedErrors);
+      } else {
+        console.error("Erro inesperado:", error);
+      }
     }
   };
 
