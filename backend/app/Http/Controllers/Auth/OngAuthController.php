@@ -7,6 +7,7 @@ use App\Models\Ong;
 use Illuminate\Http\Request;
 use App\Services\CnpjValidatorService;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class OngAuthController extends Controller
 {
@@ -63,6 +64,30 @@ class OngAuthController extends Controller
     }
 
     public function logout (Request $request) {
-        //
+        
+        $token = $request->bearerToken();
+
+        if (!$token) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'No token provided.',
+            ], 401);
+        }
+
+        $acess_token = PersonalAccessToken::findToken($token);
+
+        if (!$acess_token) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Invalid token.',
+            ], 401);
+        }
+
+        $acess_token->delete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'Logout successful.',
+        ]);
     }
 }
