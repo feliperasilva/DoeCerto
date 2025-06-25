@@ -39,7 +39,27 @@ class OngAuthController extends Controller
     }
 
     public function login (Request $request) {
-        //
+        
+        $validated = $request->validate([
+            'ong_email' => 'required|email',
+            'ong_password' => 'required|string|min:8',
+        ]);
+
+        $ong = Ong::where('ong_email', $validated['ong_email'])->first();
+
+        if (!$ong || !Hash::check($validated['ong_password'], $ong->ong_password)) {
+            return response()->json([
+                'ok' => false,
+                'error' => 'The provided credentials are incorrect.',
+            ], 401);
+        }
+
+        $token = $ong->createToken('api-token', ['post:read', 'post:create'])->plainTextToken;
+
+        return response()->json([
+            'ok' => true,
+            'token' => $token,
+        ]);
     }
 
     public function logout (Request $request) {
