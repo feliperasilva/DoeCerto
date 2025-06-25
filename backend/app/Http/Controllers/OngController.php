@@ -85,6 +85,7 @@ class OngController extends Controller
      */
     public function destroy(Ong $ong)
     {
-        //
+        Ong::findOrFail($ong->ong_id)->delete();
+        return response()->json(null, 204);
     }
 }
