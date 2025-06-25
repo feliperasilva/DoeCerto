@@ -4,10 +4,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import api from "@/services/api";
+import api from "@/services/api"; // usa instância com baseURL configurada
 import { Input, InputPassword, Checkbox, Button } from "@/components";
 import { loginSchema, type LoginSchema } from "@/lib";
 import styles from "./forms.module.css";
+import axios from "axios";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -23,24 +24,23 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      // Enviar com withCredentials para mandar cookie de sessão
-      const response = await api.post(
-        "/api/auth/login",
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/auth/login",
         {
           don_email: data.email,
           don_password: data.password,
-        },
-        { withCredentials: true }
+        }
       );
 
+      // 3. Redireciona se tudo estiver certo
       if (response.data.ok) {
         setAuthError(null);
-        // Redirecionar para página protegida após login
-        router.push("/dashboard"); // ajuste para sua rota protegida
+        router.push("/home");
       } else {
         setAuthError("Erro ao autenticar. Tente novamente.");
       }
     } catch (error: any) {
+      console.error("Erro no login:", error);
       const msg =
         error.response?.data?.error ===
         "The provided credentials are incorrect."
