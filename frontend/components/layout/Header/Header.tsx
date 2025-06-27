@@ -6,8 +6,8 @@ import styles from "./Header.module.css";
 import { Logo } from "@/components";
 import { getHeaderLinks } from "@/lib";
 import { useState } from "react";
-import api from "@/services/api";
 import type { NavigationLink } from "@/types";
+import AuthService from "@/lib/auth";
 
 export default function Header() {
   const pathname = usePathname();
@@ -18,8 +18,7 @@ export default function Header() {
   const handleLogout = async () => {
     setLoadingLogout(true);
     try {
-      await api.post("/auth/logout");
-      localStorage.removeItem("auth_token");
+      await AuthService.logout();
       router.push("/login");
     } catch (error) {
       console.error("Erro ao fazer logout:", error);
@@ -28,27 +27,44 @@ export default function Header() {
     }
   };
 
+  const renderLogoutButton = () => (
+    <button
+      className={styles.headerNavButton}
+      onClick={handleLogout}
+      disabled={loadingLogout}
+      aria-busy={loadingLogout}
+    >
+      {loadingLogout ? "Saindo..." : "Sair"}
+    </button>
+  );
+
   return (
     <header className={styles.header}>
       <Logo />
       <nav className={styles.headerNav}>
-        {links.map((link, idx) =>
-          link.href ? (
-            <Link key={idx} href={link.href} className={styles.headerNavLink}>
-              {link.label}
-            </Link>
-          ) : (
-            <button
-              key={idx}
-              className={styles.headerNavButton}
-              onClick={handleLogout}
-              disabled={loadingLogout}
-              aria-busy={loadingLogout}
-            >
-              {loadingLogout ? "Saindo..." : link.label}
-            </button>
-          )
-        )}
+        {pathname === "/home"
+          ? renderLogoutButton()
+          : links.map((link, idx) =>
+              link.href ? (
+                <Link
+                  key={idx}
+                  href={link.href}
+                  className={styles.headerNavLink}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <button
+                  key={idx}
+                  className={styles.headerNavButton}
+                  onClick={handleLogout}
+                  disabled={loadingLogout}
+                  aria-busy={loadingLogout}
+                >
+                  {loadingLogout ? "Saindo..." : link.label}
+                </button>
+              )
+            )}
       </nav>
     </header>
   );
