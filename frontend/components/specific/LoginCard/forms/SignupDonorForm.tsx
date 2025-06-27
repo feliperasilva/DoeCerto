@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import api from "@/services/api";
 import { Input, InputPassword, Button } from "@/components";
 import { signupDonorSchema, SignupDonorSchema } from "@/lib";
 import styles from "./forms.module.css";
+import axios from "axios";
 
 type SignupDonorFormProps = {
   onSuccess: () => void;
@@ -59,7 +59,10 @@ export default function SignupDonorForm({ onSuccess }: SignupDonorFormProps) {
         don_password_confirmation: formData.confirmPassword, // necessário para o Laravel
       };
 
-      const response = await api.post("/api/auth/register", payload);
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/auth/donor/register",
+        payload
+      );
       console.log("Cadastro Doador:", response.data);
       onSuccess();
     } catch (error: any) {
