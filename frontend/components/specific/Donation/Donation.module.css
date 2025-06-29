@@ -1,45 +1,63 @@
 .donationContent{
     display: flex;
+    justify-content: center;
+    overflow-x: hidden;
     gap: 20px;
+    width: 100%;
+    margin: 0;
+    height: 100%;
 }
-
+/*Lado esquerdo*/
 .donationLeftBox{
     display: flex;
+    flex-direction: column;
     background-color: #f5f5f5;    
-    align-items: flex-start;
     border-radius: 30px;
-    padding: 10px;
+    padding: 15px;
 }
 
 .donationOngImage{
-    width: 150px;
-    height: 150px;
-    background-color: black;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
     border-radius: 15px;
 }
 
-.donationHeader{
-    margin-left: 20px;
-    margin-top: 0px;
-    padding: 0px;
+.donationHeaderLeft{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
-.donationTitleOng{
+.donationTitleOngLeft{
     color: #6B39A7;
-    font-size: 64px;
-    font-weight: bold;
-    margin-right: 200px;
+    font-size: 55px;
+    font-weight: 900;
+    margin-right: 170px;
 }
 
-.donationParagraph{
+.donationParagraphLeft{
     margin: 0px;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     
 }
 
-.donationRightBox{
-    background-color: #f5f5f5;
-    border-radius: 30px;
-    width: 500px;
+.donationButtonFavorite{
+    gap: 5px;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    margin-top: 20px;
+    border-radius: 15px;
+    padding: 8px 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    border: none;
+    background-color: #6B39A7;
 }
+
