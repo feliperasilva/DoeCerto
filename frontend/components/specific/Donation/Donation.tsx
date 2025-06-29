@@ -89,7 +89,7 @@ export default function Donation() {
                    programa de adoção.</p>
               </div>
               {/* fim descrição da ONG lado direito */}
-              
+
                {/* informações da ONG lado direito */}
               <hr className={styles.hrRow}/>
               <div className={styles.donationDataONG}>
@@ -99,6 +99,15 @@ export default function Donation() {
               </div>
               {/* fim informações da ONG lado direito */}
 
+               {/* categorias */}
+              <hr className={styles.hrRow}/>
+              <div className={styles.donationCategory}>
+                <div className={styles.categories}>Categoria</div>
+                <div className={styles.category}>Animal</div>
+                <div className={styles.category}>Adoção</div>
+                <div className={styles.category}>Gatos</div>
+              </div>
+              {/*fim categorias */}
               
              </div>
             {/* fim lado direito */}
