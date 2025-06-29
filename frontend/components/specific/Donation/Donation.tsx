@@ -16,7 +16,7 @@ export default function Donation() {
                 {/* cabeçalho lado esquerdo */}
                 <div className={styles.donationHeaderLeft}>
                   <div className={styles.donationOngImage}>
-                   /* imagem */
+                   {/* imagem */}
                   </div>
 
                   <div>
@@ -29,13 +29,34 @@ export default function Donation() {
                     <button className={styles.donationButtonFavorite}>
                       <FaHeart size={20} />Favoritar</button>
                   </div>
-
                 </div>
                  {/* fim cabeçalho lado esquerdo */}
 
-                 
-            </div>  
+                {/* formas de pagamento */}
+                <div className={styles.donationForms}>
+                     <h3 className={styles.donationPaymentTitle}>Formas de contribuição</h3>
+                     
+                  <div className={styles.donationPaymentCards}>
+                     {/* card esquerdo */}
+                     <div className={styles.paymentCard}>
+                       <div className={styles.cardTop}>
+                        <FaMoneyCheckAlt className={styles.paymentIcon} size={40} />
+                        <p className={styles.cardTopP}>Doação de Dinheiro</p>
+                       </div>
+                       <div className={styles.paymentButton}>
+                        <button className={styles.button1}></button>
+                        <button className={styles.button1}></button>
+                        <button className={styles.button2}></button>
+                       </div>
+                     </div>
+                     {/* fim card esquerdo */}
+                  </div>
+                  </div>
+                {/* fim formas de pagamento */}
+            </div>
+            {/* fim lado esquerdo */}
+             
             {/* fim lado direito */}
       </div>  
-    )
+    );
 }
