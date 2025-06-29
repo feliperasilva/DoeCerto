@@ -69,7 +69,20 @@ export default function Donation() {
                 {/* fim formas de pagamento */}
             </div>
             {/* fim lado esquerdo */}
-             
+
+            {/* lado direito */}
+            <div className={styles.donationRightBox}>
+              {/* cabeçalho lado direito */}
+              <div className={styles.donationHeaderRight}>
+                <h1 className={styles.donationTitleRight}>
+                  Sobre a ONG
+                  <IoReturnUpBackOutline size={40} style={{color: '#6B39A7', marginLeft: '160px'}} />
+                </h1>
+              </div>
+              {/* fim cabeçalho lado direito */}
+
+              
+             </div>
             {/* fim lado direito */}
       </div>  
     );
