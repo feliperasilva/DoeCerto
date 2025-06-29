@@ -152,3 +152,24 @@
     font-size: 20px;
     font-weight: 600;
 }
+
+.textIcon:not(:last-child){
+    margin-bottom: 8px;
+}
+
+.textIcon{
+    gap: 15px;
+    display: flex;
+    align-items: center;
+    margin: 25px 0px;
+}
+
+.dataIcon{
+    font-size: 25px;
+}
+
+.donationCategory{
+    display: flex;
+    gap: 10px;
+}
+
