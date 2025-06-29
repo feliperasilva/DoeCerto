@@ -1,45 +1,200 @@
 .donationContent{
     display: flex;
+    justify-content: center;
+    overflow-x: hidden;
     gap: 20px;
+    width: 100%;
+    margin: 0;
+    height: 100%;
 }
-
+/*Lado esquerdo*/
 .donationLeftBox{
     display: flex;
+    flex-direction: column;
     background-color: #f5f5f5;    
-    align-items: flex-start;
     border-radius: 30px;
-    padding: 10px;
+    padding: 15px;
 }
 
 .donationOngImage{
-    width: 150px;
-    height: 150px;
-    background-color: black;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
     border-radius: 15px;
 }
 
-.donationHeader{
-    margin-left: 20px;
-    margin-top: 0px;
-    padding: 0px;
+.donationHeaderLeft{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
-.donationTitleOng{
+.donationTitleOngLeft{
     color: #6B39A7;
-    font-size: 64px;
-    font-weight: bold;
-    margin-right: 200px;
+    font-size: 55px;
+    font-weight: 900;
+    margin-right: 170px;
 }
 
-.donationParagraph{
+.donationParagraphLeft{
     margin: 0px;
-    font-size: 24px;
-    font-weight: 700;
-    
+    font-size: 20px;
+    font-weight: 700; 
 }
 
+.donationButtonFavorite{
+    gap: 5px;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    margin-top: 20px;
+    border-radius: 15px;
+    padding: 8px 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    border: none;
+    background-color: #6B39A7;
+}
+
+.donationForms{
+    display: flex;
+    flex-direction: column;
+}
+
+.donationPaymentTitle {
+  font-size: 47px;
+  font-weight: 700;
+  margin: 60px 0 12px;
+  color: #333;
+}
+
+.donationPaymentCards {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.paymentCard {
+  background:  #6B39A7;
+  color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardTop{
+    flex-direction: row;
+    gap: 10px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.cardTopP{
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.paymentButton{
+    margin-top: 25px;
+    display: flex;
+    align-items: flex-end; 
+    gap: 10px;
+}
+
+.paymentIcon {
+  margin-bottom: 8px;
+}
+
+.button1{
+    width: 80px;
+    height: 30px;
+    background-color: #9540FF;
+    border-radius: 5px;
+    border: none;
+}
+
+.button2{
+    width: 150px;
+    height: 40px;
+    background-color: white;
+    border-radius: 5px;
+    border: none;
+
+}
+/*Fim lado esquerdo*/
+/*Lado direito*/
 .donationRightBox{
+    display: flex;
+    flex-direction: column;
     background-color: #f5f5f5;
     border-radius: 30px;
-    width: 500px;
+    padding: 5px 25px;
 }
+
+.donationTitleRight{
+    color: #333;
+    font-size: 55px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+
+.donationParagraphRight{
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.textIcon:not(:last-child){
+    margin-bottom: 8px;
+}
+
+.textIcon{
+    gap: 15px;
+    display: flex;
+    align-items: center;
+    margin: 25px 0px;
+}
+
+.dataIcon{
+    font-size: 25px;
+}
+
+.donationCategory{
+    display: flex;
+    gap: 10px;
+}
+
+.categories{
+   width: 100px;
+   height: 40px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 8px;
+   font-weight: bold; 
+}
+
+.category{
+    width: 100px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bold; 
+    background-color: #fff;
+}
+
+.hrRow{
+    background-color: #999;
+    height: 2px;
+    margin: 15px 0px;
+}
+/*fim lado direito*/
