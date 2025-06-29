@@ -50,8 +50,22 @@ export default function Donation() {
                        </div>
                      </div>
                      {/* fim card esquerdo */}
+                     {/* card direito */}
+                    <div className={styles.paymentCard}>
+                       <div className={styles.cardTop}>
+                        <FaGift className={styles.paymentIcon} size={40} />
+                        <p className={styles.cardTopP}>Doação de Itens</p>
+                       </div>
+                       <div className={styles.paymentButton}>
+                        <button className={styles.button1}></button>
+                        <button className={styles.button1}></button>
+                        <button className={styles.button2}></button>
+                       </div>
+                    </div>
+                    {/* fim card direito */}
                   </div>
-                  </div>
+                    
+                </div>
                 {/* fim formas de pagamento */}
             </div>
             {/* fim lado esquerdo */}
