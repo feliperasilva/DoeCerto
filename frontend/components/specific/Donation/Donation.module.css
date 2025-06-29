@@ -42,8 +42,7 @@
 .donationParagraphLeft{
     margin: 0px;
     font-size: 20px;
-    font-weight: 700;
-    
+    font-weight: 700; 
 }
 
 .donationButtonFavorite{
@@ -85,7 +84,6 @@
   color: #fff;
   border-radius: 12px;
   padding: 16px;
-  
   display: flex;
   display: flex;
   flex-direction: column;
@@ -173,3 +171,30 @@
     gap: 10px;
 }
 
+.categories{
+   width: 100px;
+   height: 40px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 8px;
+   font-weight: bold; 
+}
+
+.category{
+    width: 100px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bold; 
+    background-color: #fff;
+}
+
+.hrRow{
+    background-color: #999;
+    height: 2px;
+    margin: 15px 0px;
+}
+/*fim lado direito*/
