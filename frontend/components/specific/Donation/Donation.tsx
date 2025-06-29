@@ -90,6 +90,16 @@ export default function Donation() {
               </div>
               {/* fim descrição da ONG lado direito */}
               
+               {/* informações da ONG lado direito */}
+              <hr className={styles.hrRow}/>
+              <div className={styles.donationDataONG}>
+                <p className={styles.textIcon}><MdEmail className={styles.dataIcon} /> contato@exemplo.com</p>
+                <p className={styles.textIcon}><MdPhone className={styles.dataIcon} /> (81) 91234-5678</p>
+                <p className={styles.textIcon}><MdLocationOn className={styles.dataIcon} /> Rua Exemplo, 123 - Igarassu, PE</p>
+              </div>
+              {/* fim informações da ONG lado direito */}
+
+              
              </div>
             {/* fim lado direito */}
       </div>  
