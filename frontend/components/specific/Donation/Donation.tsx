@@ -80,7 +80,15 @@ export default function Donation() {
                 </h1>
               </div>
               {/* fim cabeçalho lado direito */}
-
+              {/* descrição da ONG lado direito */}
+              <div className={styles.donationParagraphRight}>
+                <p>A ONG é dedicada a amparar e transformar a vida dos <br />
+                   animais em situação de vulnerabilidade, <br /> 
+                   fornecem lar temporário, até que eles estejam <br /> 
+                   em boa saúde para que sejam inserido no <br /> 
+                   programa de adoção.</p>
+              </div>
+              {/* fim descrição da ONG lado direito */}
               
              </div>
             {/* fim lado direito */}
