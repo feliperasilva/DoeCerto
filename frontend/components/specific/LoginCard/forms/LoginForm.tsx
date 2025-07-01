@@ -1,13 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 import { Input, InputPassword, Checkbox, Button } from "@/components";
 import { loginSchema, type LoginSchema } from "@/lib";
+import AuthService from "@/lib/auth";
 import styles from "./forms.module.css";
 
 export default function LoginForm() {
+  const router = useRouter();
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -17,10 +22,22 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginSchema) => {
-    console.log("Dados validados:", data);
-    // Aqui no futuro você chama a API real de login
-    // const response = await axios.post("/api/auth/login", data);
-    // console.log("Usuário autenticado:", response.data);
+    try {
+      const res = await AuthService.login({
+        don_email: data.email,
+        don_password: data.password,
+      });
+
+      setAuthError(null);
+
+      router.push("/home");
+    } catch (error: any) {
+      const msg =
+        error === "The provided credentials are incorrect."
+          ? "Credenciais inválidas. Verifique seu email e senha."
+          : "Erro inesperado ao fazer login.";
+      setAuthError(msg);
+    }
   };
 
   return (
@@ -29,6 +46,8 @@ export default function LoginForm() {
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
+      {authError && <p className={styles.authError}>{authError}</p>}
+
       <Input
         id="login-email"
         label="Email"

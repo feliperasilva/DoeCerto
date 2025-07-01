@@ -18,12 +18,12 @@ export default function LoginCard() {
   };
 
   const handleBack = () => {
+    console.log("handleBack chamado: voltando para painel inicial");
     setPanelState("initial");
   };
 
   return (
     <div className={styles.loginCardContainer}>
-      {/* Panel 1: Login (agora desmontável) */}
       <AnimatePresence mode="wait">
         {panelState === "initial" && (
           <motion.div
@@ -42,7 +42,6 @@ export default function LoginCard() {
         )}
       </AnimatePresence>
 
-      {/* Panel 2: Seletor / Retorno */}
       <motion.div
         className={`${styles.panel} ${styles.panel2}`}
         animate={{
@@ -111,7 +110,6 @@ export default function LoginCard() {
         </AnimatePresence>
       </motion.div>
 
-      {/* Panel 3: Cadastro */}
       <AnimatePresence mode="wait">
         {(panelState === "signup-donor" || panelState === "signup-ong") && (
           <motion.div
@@ -129,7 +127,7 @@ export default function LoginCard() {
                   : "Cadastro ONG"}
               </h1>
               {panelState === "signup-donor" ? (
-                <SignupDonorForm />
+                <SignupDonorForm onSuccess={handleBack} />
               ) : (
                 <SignupOngForm />
               )}
