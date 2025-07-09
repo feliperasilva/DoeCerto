@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import styles from "./Donation.module.css";
 import StarRating from '../../StarRating';
 import { FaHeart, FaMoneyCheckAlt, FaGift } from 'react-icons/fa';
@@ -7,6 +9,8 @@ import { MdEmail, MdPhone, MdLocationOn } from 'react-icons/md';
 import { IoReturnUpBackOutline } from 'react-icons/io5';
 
 export default function Donation() {
+const [showModal, setShowModal] = useState(false);
+
     return(
       <div className={styles.donationContent}>
 
@@ -43,11 +47,13 @@ export default function Donation() {
                         <FaMoneyCheckAlt className={styles.paymentIcon} size={40} />
                         <p className={styles.cardTopP}>Doação de Dinheiro</p>
                        </div>
+
                        <div className={styles.paymentButton}>
                         <button className={styles.button1}></button>
                         <button className={styles.button1}></button>
-                        <button className={styles.button2}></button>
+                        <button className={styles.button2} onClick={() => setShowModal(true)}></button>
                        </div>
+
                      </div>
                      {/* fim card esquerdo */}
                      {/* card direito */}
@@ -102,7 +108,7 @@ export default function Donation() {
                {/* categorias */}
               <hr className={styles.hrRow}/>
               <div className={styles.donationCategory}>
-                <div className={styles.categories}>Categoria</div>
+                <div className={styles.categories}>Categorias</div>
                 <div className={styles.category}>Animal</div>
                 <div className={styles.category}>Adoção</div>
                 <div className={styles.category}>Gatos</div>
@@ -111,6 +117,26 @@ export default function Donation() {
               
              </div>
             {/* fim lado direito */}
+
+              {showModal && (
+            <div className={styles.modalOverlay}>
+              <div className={styles.modalContent}>
+                <button onClick={() => setShowModal(false)} className={styles.modalClose}>×</button>
+                <h2 className={styles.modalTitle}>Doar dinheiro</h2>
+                <div className={styles.qrCode}>Qr code</div>
+                <div className={styles.modalOngData}>
+                <p className={styles.modalOngName}>SOS Gatinhos</p>
+                <p><strong>Chave PIX:</strong></p>
+                <p>(00) 00000-0000</p>
+                <p><strong>Conta:</strong></p>
+                <p>Banco 123 Agência 0000 Conta 12345-6</p>
+                </div>
+                <div style={{ marginBottom: '5px'}}></div>
+                <button className={styles.modalConfirm}>Confirmar</button>
+              </div>
+            </div>
+)}
+
       </div>  
     );
 }
