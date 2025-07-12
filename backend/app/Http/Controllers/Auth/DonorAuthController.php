@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donor;
+use App\Mail\WelcomeMail;
 use Faker\Provider\ar_EG\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class DonorAuthController extends Controller
@@ -26,7 +28,9 @@ class DonorAuthController extends Controller
             'don_password' => Hash::make($validated['don_password']),
             'don_description' => $validated['don_description'] ?? null,
         ]);
-
+        
+        Mail::to($donor->don_email)->send(new WelcomeMail($donor));
+        
         $token = $donor->createToken('api-token', ['post:read', 'post:create'])->plainTextToken;
 
         return response()->json([
@@ -34,6 +38,7 @@ class DonorAuthController extends Controller
             'donor' => $donor,
             'token' => $token,
         ]);
+
     }
 
     public function login(Request $request) {
