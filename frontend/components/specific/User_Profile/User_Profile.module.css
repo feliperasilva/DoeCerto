@@ -1,4 +1,28 @@
 .container{
-    color: red;
-    background-color: red;
+    display: flex;
+    align-self: flex-start;
+    flex-direction: column;
+    border: 2px solid red;
+    width: 100%;
+}
+
+.userIformation{
+    width: 100%;
+    background: #6B39A7;
+    display: flex;
+    flex-direction: row;
+    padding: 20px 40px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.userPhoto{
+    background-color: white;
+    border-radius: 50%;
+    
+}
+
+.userData{
+    margin: 20px 70px;
+    color: white;
 }
