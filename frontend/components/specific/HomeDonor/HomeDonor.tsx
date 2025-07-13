@@ -21,11 +21,11 @@ const ongs = [
 const melhores = [
   { nome: "Caminhos Livres", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb", estrelas : 5 },
   { nome: "Tecendo Futuros", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9", estrelas : 5 },
-  { nome: "Rede Horizonte Azul", img: "https://placehold.co/230x230?text=Rede+Horizonte+Azul" , estrelas : 4},
+  { nome: "Rede Horizonte Azul", img: "https://carinhodebicho.com.br/wp-content/uploads/2021/11/novembro-azul-pet-saiba-a-importancia-1024x640.png" , estrelas : 4},
   { nome: "Luz para o Saber", img: "https://images.unsplash.com/photo-1519681393784-d120267933ba", estrelas : 5 },
-  { nome: "Futebol de Rua", img: "https://images.unsplash.com/photo-1464983953574-0892a716854b", estrelas : 5 },
-  { nome: "Raízes do Amanhã", img: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca" , estrelas : 5},
-  { nome: "Laço Rosa Livre", img: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe" , estrelas : 5}
+  { nome: "Futebol de Rua", img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg", estrelas : 5 },
+  { nome: "Raízes do Amanhã", img: "https://conexaoplaneta.com.br/wp-content/uploads/2019/07/etiopia-plantio-arvores-conexao-planeta.jpg" , estrelas : 5},
+  { nome: "Laço Rosa Livre", img: "https://cimcentral.com.br/arquivo/651afdd1c1bb5.jpg" , estrelas : 5}
 ];
 
 function renderStars(qtd : number) {
