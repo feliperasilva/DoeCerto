@@ -10,10 +10,10 @@
   flex-direction: row;
   align-items: center;
   margin-top: 28px;
-  margin-left: 32px;
+  margin-left: 10px;
   margin-right: 32px;
   max-width: 2100px;      
-  width: calc(100% - 64px); 
+  width: calc(100% - 20px); 
 }
 
 .searchContainer {
@@ -52,7 +52,7 @@
   border-radius: 8px;
   padding: 0 28px;
   font-size: 20px;
-  margin-left: 100px;
+  margin-left: 40px;
   cursor: pointer;
   font-weight: 500;
   height: 44px;
@@ -72,3 +72,90 @@
   font-size: 18px;
   font-weight: bold;
 }
+
+.nearyouong{
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 42px;
+  margin-top: 18px;
+  justify-content: flex-start;
+  width: 100%;
+  /* REMOVA QUALQUER margin-left OU margin-right */
+}
+
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px #00000010;
+  padding: 20px 16px 20px 16px;
+  min-width: 230px;
+  max-width: 230px;
+}
+
+.cardImg {
+  width: 230px;
+  height: 230px;
+  border-radius: 20px;
+  object-fit: cover;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: #232323;
+  text-align: center;
+}
+
+.cardButton {
+  background: #7b36c3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 0;
+  width: 90%;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: center;
+}
+
+.cardButton:hover {
+  background: #5b2791;
+}
+
+.bestRatedSection {
+  margin-top: 48px;
+  margin-left: 36px;
+}
+
+.bestRatedTitle {
+  font-size: 30px;
+  font-weight: 700;
+  color: #3e3e3e;
+  margin: 0 0 18px 0;
+}
+
+.stars {
+  display: block;
+  color: #222;
+  font-size: 18px;
+  margin-bottom: 8px;
+  margin-top: -4px;
+  letter-spacing: 1px;
+}
+
