@@ -14,6 +14,9 @@ export default function User_Profile() {
             <p style={{fontSize: 20}}>(81) 9 1234-5678</p>
         </div>
       </div>
+      <div className={styles.totalDonations}>
+        <button className={styles.editUserProfile}>Editar Perfil</button>
+      </div>
     </div>
   );
 }
