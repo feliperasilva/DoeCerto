@@ -28,22 +28,68 @@
 }
 
 .totalDonations{
-    display: flex;
-    flex-direction: column;
+    /*display: flex;*/
+    /*flex-direction: column;*/
     background-color: #F5F5F5;
-    padding: 30px 50px;
+    padding: 30px 50px 0px 50px;
+    position: relative;
+    
 }
 
-.editUserProfile {
+.editButton {
+  position: absolute;
   display: flex;
-  margin-left: auto; 
+  width: fit-content;
+  top: 20px;
+  right: 20px;
   background-color: #6B39A7;
   color: white;
   font-size: 18px;
-  font-weight: 500;
-  width: fit-content;
-  padding: 10px 20px; 
+  font-weight: 700;
   border: none;
-  border-radius: 6px;
+  border-radius: 15px;
+  padding: 12px 20px;
   cursor: pointer;
+}
+
+.title {
+  color: #6B39A7;
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+ 
+}
+
+.textBox {
+  color: #6B39A7;
+}
+
+.subtitle {
+  font-size: 40px;
+  margin-bottom: 5px;
+  margin-top: 50px;
+}
+
+.donationCount {
+  font-size: 48px;
+  font-weight: 800;
+}
+
+.imageBox {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageBox img {
+  height: auto;
+  object-fit: cover;
 }

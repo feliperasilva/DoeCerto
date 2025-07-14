@@ -2,6 +2,7 @@
 
 import React from "react";
 import styles from "./User_Profile.module.css";
+import Image from 'next/image';
 
 export default function User_Profile() {
   return (
@@ -15,7 +16,25 @@ export default function User_Profile() {
         </div>
       </div>
       <div className={styles.totalDonations}>
-        <button className={styles.editUserProfile}>Editar Perfil</button>
+        <button className={styles.editButton}>Editar Perfil</button>
+
+      <h1 className={styles.title}>Sua generosidade transforma vidas!</h1>
+
+      <div className={styles.content}>
+        <div className={styles.textBox}>
+          <h2 className={styles.subtitle}>Total de doações</h2>
+          <h2 className={styles.donationCount}>5</h2>
+        </div>
+
+        <div className={styles.imageBox}>
+          <Image
+            src="/illustration.svg" 
+            alt="Mulher segurando coração"
+            width={300}
+            height={300}
+          />
+        </div>
+      </div>
       </div>
     </div>
   );
