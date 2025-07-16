@@ -5,6 +5,12 @@ import styles from "./User_Profile.module.css";
 import Image from 'next/image';
 
 export default function User_Profile() {
+   const doadores = [
+    { data: "16/04/2025", tipo: "Dinheiro", valor: "R$ 30,00", ong: "SOS Gatinhos" },
+    { data: "16/04/2025", tipo: "Dinheiro", valor: "R$ 30,00", ong: "SOS Gatinhos" },
+    { data: "16/04/2025", tipo: "Dinheiro", valor: "R$ 30,00", ong: "SOS Gatinhos" },
+  ];
+
   return (
     <div className={styles.container}>
       <div className={styles.userIformation}>
@@ -36,6 +42,30 @@ export default function User_Profile() {
         </div>
       </div>
       </div>
+
+        <div className={styles.tableContent}>
+          <table className={styles.tableDonations}>
+            <thead style={{borderTopLeftRadius:20, borderTopRightRadius:20}}>
+              <tr>
+                <th className={styles.headerTable}>Data</th>
+                <th className={styles.headerTable}>Tipo</th>
+                <th className={styles.headerTable}>Valor/Item</th>
+                <th className={styles.headerTable}>ONG</th>
+              </tr>
+            </thead>
+            <tbody>
+              {doadores.map((doador) => (
+                <tr key={doador.data}>
+                  <td className={styles.rowTable}>{doador.data}</td>
+                  <td className={styles.rowTable}>{doador.tipo}</td>
+                  <td className={styles.rowTable}>{doador.valor}</td>
+                  <td className={styles.rowTable}>{doador.ong}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
     </div>
   );
 }
