@@ -2,7 +2,6 @@
     display: flex;
     align-self: flex-start;
     flex-direction: column;
-    border: 2px solid red;
     width: 100%;
 }
 
@@ -93,3 +92,5 @@
   height: auto;
   object-fit: cover;
 }
+
+
