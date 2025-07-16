@@ -23,12 +23,10 @@ export default function SignupOngForm() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Validação em tempo real: validamos só o campo que mudou, com o form parcial
     const partialData = { ...formData, [name]: value };
     const result = signupNgoSchema.safeParse(partialData);
 
     if (!result.success) {
-      // pega o erro específico do campo que mudou
       const issue = result.error.issues.find((i) => i.path[0] === name);
       setFormErrors((prev) => ({ ...prev, [name]: issue?.message || "" }));
     } else {
@@ -39,7 +37,6 @@ export default function SignupOngForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Valida tudo antes de enviar
     const result = signupNgoSchema.safeParse(formData);
     if (!result.success) {
       const newErrors: typeof formErrors = {};
@@ -48,16 +45,61 @@ export default function SignupOngForm() {
         newErrors[field] = issue.message;
       });
       setFormErrors(newErrors);
-      return; // não envia se tiver erro
+      return;
     }
 
     try {
-      const response = await axios.post("/api/auth/signup/ong", formData);
+      const payload = {
+        ong_name: formData.name,
+        ong_email: formData.email,
+        ong_password: formData.password,
+        ong_password_confirmation: formData.confirmPassword,
+        ong_cnpj: formData.cnpj,
+      };
+
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/ongs", // <-- Rota correta do OngController
+        payload
+      );
+
       console.log("Cadastro ONG:", response.data);
-      // aqui você pode resetar o form ou mostrar mensagem de sucesso
-    } catch (error) {
-      console.error("Erro no cadastro da ONG:", error);
-      // pode exibir erro global aqui se quiser
+
+      // Reset do formulário
+      setFormData({
+        name: "",
+        cnpj: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+      setFormErrors({});
+    } catch (error: any) {
+      if (axios.isAxiosError(error) && error.response?.status === 422) {
+        const backendErrors = error.response.data.errors;
+
+        const newErrors: typeof formErrors = {};
+        Object.keys(backendErrors).forEach((field) => {
+          const frontendField =
+            field === "ong_password_confirmation"
+              ? "confirmPassword"
+              : field === "ong_password"
+              ? "password"
+              : field === "ong_email"
+              ? "email"
+              : field === "ong_name"
+              ? "name"
+              : field === "ong_cnpj"
+              ? "cnpj"
+              : (field as keyof SignupNgoSchema);
+
+          newErrors[frontendField as keyof SignupNgoSchema] =
+            backendErrors[field][0];
+        });
+
+        setFormErrors(newErrors);
+      } else {
+        console.error("Erro inesperado no cadastro da ONG:", error);
+      }
     }
   };
 
