@@ -93,33 +93,4 @@
   object-fit: cover;
 }
 
-.tableContent{
-  width: 100%;
-  margin-top: 20px;
-}
 
-.tableDonations{
-  width: 100%;
-  border-collapse: collapse;
-  
-}
-
-.headerTable{
-  justify-content: center;
-  font-size: 24px;
-  color: #6B39A7;
-  height: 70px;
-  padding: 10px;
-  background-color: #F5F5F5;
-  text-align: left;
-}
-
-.rowTable{
-  font-size: 18px;
-  font-weight: 800;
-  border-bottom: 1px solid #333;
-  background-color: #fbfafa;
-  padding: 10px;
-  height: 70px;
-  justify-content: center;
-}
