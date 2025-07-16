@@ -1,9 +1,13 @@
+"use client";
+import { useState } from 'react';
 import { Search } from "lucide-react";
 import styles from "./HomeDonor.module.css";
+import Link from 'next/link';
+import { useRef, useEffect } from 'react';
 
 const usuario = {
   nome: "Guistoso123",
-  foto: "https://randomuser.me/api/portraits/men/32.jpg" // Troque para a URL real ou do backend
+  foto: "https://randomuser.me/api/portraits/men/32.jpg" 
 };
 
 
@@ -38,6 +42,28 @@ function renderStars(qtd : number) {
 }
 
 export default function HomeDonor() {
+    const [showFilters, setShowFilters] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const filterRef = useRef<HTMLDivElement>(null);
+  const categories = [
+  "Animais",
+  "Causas Sociais", 
+  "Ajuda Humanitária",
+  "Educação",
+  "Meio Ambiente",
+  "Saúde"
+];
+  useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+      setShowFilters(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, []);
+
   return (
     <div className={styles.container}>
       
@@ -51,9 +77,28 @@ export default function HomeDonor() {
             placeholder="SOS Gatinho"
           />
         </div>
-        <button className={styles.filterButton}>
-          Filtrar <span className={styles.arrow}>▼</span>
-        </button>
+       <div className={styles.filterWrapper} ref={filterRef}>
+  <button 
+    className={styles.filterButton}
+    onClick={() => setShowFilters(!showFilters)}
+  >
+    Filtrar <span className={styles.arrow}>{showFilters ? '▲' : '▼'}</span>
+  </button>
+
+  {showFilters && (
+    <div className={styles.filterDropdown}>
+      {categories.map((category) => (
+        <div
+          key={category}
+          className={styles.filterOption}
+          onClick={() => setSelectedCategory(category)}
+        >
+          {category}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
       </div>
 
       {/* MAIS PRÓXIMAS DE VOCÊ */}
@@ -72,7 +117,9 @@ export default function HomeDonor() {
               <p className={styles.cardTitle}>{ong.nome}</p>
               {renderStars(ong.estrelas ?? 4)}
 
-              <button className={styles.cardButton}>Doar</button>
+              <Link href="/donation" className={styles.cardButton}>
+  Doar
+</Link>
             </div>
           ))}
         </div>
@@ -94,7 +141,9 @@ export default function HomeDonor() {
               <p className={styles.cardTitle}>{ong.nome}</p>
               {renderStars(ong.estrelas ?? 4)}
 
-              <button className={styles.cardButton}>Doar</button>
+             <Link href="/donation" className={styles.cardButton}>
+  Doar
+</Link>
             </div>
           ))}
         </div>

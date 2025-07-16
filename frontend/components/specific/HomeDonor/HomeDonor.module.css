@@ -158,4 +158,30 @@
   margin-top: -4px;
   letter-spacing: 1px;
 }
+/* Estilos do Filtro - Adicione no FINAL do arquivo */
+.filterWrapper {
+  position: relative;
+  display: inline-block;
+}
 
+.filterDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 0;
+  z-index: 100;
+  width: 180px;
+  margin-top: 5px;
+}
+
+.filterOption {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.filterOption:hover {
+  background-color: #f5f5f5;
+}
