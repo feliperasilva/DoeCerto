@@ -24,4 +24,10 @@ class DonationController extends Controller
 
         return response()->json($donation, 201);
     }
+
+    public function show($id)
+    {
+        $donation = Donation::with(['donor', 'ong'])->findOrFail($id);
+        return response()->json($donation);
+    }
 }
