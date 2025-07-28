@@ -4,24 +4,30 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateDonationsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('donations', function (Blueprint $table) {
-            $table->id();
+            $table->id('donation_id');
+            $table->unsignedBigInteger('donor_id');
+            $table->unsignedBigInteger('ong_id');
+            $table->decimal('value', 10, 2);
+            $table->dateTime('date')->unique();
+            $table->string('description', 255)->nullable();
+            $table->foreign('donor_id')
+                  ->references('id')->on('donors')
+                  ->onDelete('cascade');
+            $table->foreign('ong_id')
+                  ->references('id')->on('ongs')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('donations');
     }
-};
+}
+
