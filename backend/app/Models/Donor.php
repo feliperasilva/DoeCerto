@@ -24,5 +24,9 @@ class Donor extends Authenticatable
         'don_password',
     ];
 
+    public function donations() {
+        return $this->hasMany(Donation::class);
+    }
+
     public $timestamps = true;
 }
