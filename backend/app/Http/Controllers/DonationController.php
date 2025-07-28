@@ -30,4 +30,21 @@ class DonationController extends Controller
         $donation = Donation::with(['donor', 'ong'])->findOrFail($id);
         return response()->json($donation);
     }
+
+    public function update(Request $request, $id)
+    {
+        $donation = Donation::findOrFail($id);
+
+        $validated = $request->validate([
+            'donor_id' => 'exists:donors,id',
+            'ong_id' => 'exists:ongs,id',
+            'value' => 'numeric|min:1',
+            'date' => 'date|unique:donations,date,' . $donation->id,
+            'description' => 'nullable|string|max:255',
+        ]);
+
+        $donation->update($validated);
+
+        return response()->json($donation);
+    }
 }
