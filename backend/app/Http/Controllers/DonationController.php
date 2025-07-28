@@ -55,4 +55,10 @@ class DonationController extends Controller
 
         return response()->json(['message' => 'Donation deleted']);
     }
+
+    public function byDonor($donorId)
+    {
+        $donations = Donation::where('donor_id', $donorId)->with('ong')->get();
+        return response()->json($donations);
+    }
 }
