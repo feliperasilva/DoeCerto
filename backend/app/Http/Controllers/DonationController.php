@@ -47,4 +47,12 @@ class DonationController extends Controller
 
         return response()->json($donation);
     }
+
+    public function destroy($id)
+    {
+        $donation = Donation::findOrFail($id);
+        $donation->delete();
+
+        return response()->json(['message' => 'Donation deleted']);
+    }
 }
