@@ -9,7 +9,7 @@ class CreateDonationsTable extends Migration
     public function up()
     {
         Schema::create('donations', function (Blueprint $table) {
-            $table->id('donation_id');
+            $table->id();
             $table->unsignedBigInteger('donor_id');
             $table->unsignedBigInteger('ong_id');
             $table->decimal('value', 10, 2);
