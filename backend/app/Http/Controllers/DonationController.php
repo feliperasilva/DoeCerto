@@ -61,4 +61,10 @@ class DonationController extends Controller
         $donations = Donation::where('donor_id', $donorId)->with('ong')->get();
         return response()->json($donations);
     }
+
+    public function byOng($ongId)
+    {
+        $donations = Donation::where('ong_id', $ongId)->with('donor')->get();
+        return response()->json($donations);
+    }
 }
