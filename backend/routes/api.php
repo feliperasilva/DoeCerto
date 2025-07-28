@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\DonorAuthController;
 use App\Http\Controllers\OngController;
 use App\Http\Controllers\Auth\OngAuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DonationController;
+
 
 Route::apiResource('donors', DonorController::class);
 
@@ -22,6 +24,11 @@ Route::prefix('/auth/ong')->group(function () {
    Route::post('/login', [OngAuthController::class, 'login']);
    Route::post('/logout', [OngAuthController::class, 'logout']);
 });
+
+Route::apiResource('donations', DonationController::class);
+Route::get('donations/donor/{donorId}', [DonationController::class, 'byDonor']);
+Route::get('donations/ong/{ongId}', [DonationController::class, 'byOng']);
+
 
 
 
