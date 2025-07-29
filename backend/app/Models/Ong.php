@@ -27,5 +27,10 @@ class Ong extends Model
         'ong_password',
     ];
 
+    public function donations() {
+        return $this->hasMany(Donation::class);
+    }
+
+
     public $timestamps = true;
 }
