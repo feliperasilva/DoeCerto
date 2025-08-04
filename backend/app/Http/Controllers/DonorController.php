@@ -19,9 +19,17 @@ class DonorController extends Controller
             'don_email' => 'required|email|unique:donors,don_email',
             'don_password' => 'required|string|min:8',
             'don_description' => 'nullable|string|max:255',
+            'don_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
+        if ($request->hasFile('don_image')) {
+            $image = $request->file('don_image');
+            $path = $image->store('Donor', 'public'); // salva em public/Donor
+            $data['don_image'] = $path;
+        }
+    
         $data['don_password'] = bcrypt($data['don_password']);
+    
         return Donor::create($data);
     }
 
@@ -39,7 +47,19 @@ class DonorController extends Controller
             'don_email' => 'sometimes|required|email|unique:donors,don_email,' . $id . ',don_id',
             'don_password' => 'sometimes|required|string|min:8',
             'don_description' => 'nullable|string|max:255',
+            'don_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('don_image')) {
+            // Apagar imagem antiga (opcional)
+            if ($donor->don_image && \Storage::disk('public')->exists($donor->don_image)) {
+                \Storage::disk('public')->delete($donor->don_image);
+            }
+
+            $image = $request->file('don_image');
+            $path = $image->store('Donor', 'public');
+            $data['don_image'] = $path;
+        }
 
         if (isset($data['don_password'])) {
             $data['don_password'] = bcrypt($data['don_password']);
@@ -48,6 +68,7 @@ class DonorController extends Controller
         $donor->update($data);
         return $donor;
     }
+
 
     public function destroy($id)
     {

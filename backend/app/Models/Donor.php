@@ -14,10 +14,10 @@ class Donor extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens;
 
     protected $table = 'donors';
-    protected $primaryKey = 'don_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'don_name', 'don_email', 'don_password', 'don_description',
+        'don_name', 'don_email', 'don_password', 'don_description', 'don_image',
     ];
 
     protected $hidden = [
