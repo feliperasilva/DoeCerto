@@ -14,7 +14,7 @@ class Ong extends Model
 
     protected $table = 'ongs';
 
-    protected $primaryKey = 'ong_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'ong_name',

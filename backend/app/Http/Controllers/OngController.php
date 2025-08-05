@@ -47,7 +47,7 @@ class OngController extends Controller
      */
     public function show(Ong $ong)
     {
-        return Ong::findOrFail($ong->ong_id);
+        return response()->json($ong);
     }
 
     /**
@@ -57,7 +57,7 @@ class OngController extends Controller
     {
         $validated = $request->validate([
             'ong_name' => 'sometimes|required|string|max:255',
-            'ong_email' => 'sometimes|required|email|unique:ongs,ong_email,' . $ong->ong_id . ',ong_id',
+            'ong_email' => 'sometimes|required|email|unique:ongs,ong_email,' . $ong->id,
             'ong_password' => 'sometimes|required|string|min:8|confirmed',
             'ong_cnpj' => 'sometimes|required|string|unique:ongs,ong_cnpj,' . $ong->ong_id . ',ong_id',
         ]);
@@ -85,7 +85,7 @@ class OngController extends Controller
      */
     public function destroy(Ong $ong)
     {
-        Ong::findOrFail($ong->ong_id)->delete();
+        $ong->delete();
         return response()->json(null, 204);
     }
 }

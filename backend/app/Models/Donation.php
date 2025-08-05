@@ -21,7 +21,7 @@ class Donation extends Model
 
     public function ong()
     {
-        return $this->belongsTo(Ong::class);
+        return $this->belongsTo(Ong::class, 'ong_id', 'id');
     }
 }
 
