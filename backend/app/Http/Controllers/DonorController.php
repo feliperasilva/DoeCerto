@@ -48,15 +48,18 @@ class DonorController extends Controller
         $donor = Donor::findOrFail($id);
 
         $data = $request->validate([
-            'don_name' => 'sometimes|required|string|max:255',
-            'don_email' => 'sometimes|required|email|unique:donors,don_email,' . $id . ',don_id',
-            'don_password' => 'sometimes|required|string|min:8',
-            'don_description' => 'nullable|string|max:255',
-            'don_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'don_name'         => 'sometimes|required|string|max:255',
+            'don_email'        => 'sometimes|required|email|unique:donors,don_email,' . $id . ',id',
+            'don_password'     => 'sometimes|required|string|min:8',
+            'don_description'  => 'nullable|string|max:255',
+            'don_image'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'don_phone'        => 'nullable|string|max:20',
+            'don_cep'          => 'nullable|string|max:10',
+            'don_houseNumber'  => 'nullable|string|max:10',
+            'don_complement'   => 'nullable|string|max:255',
         ]);
 
         if ($request->hasFile('don_image')) {
-            // Apagar imagem antiga (opcional)
             if ($donor->don_image && \Storage::disk('public')->exists($donor->don_image)) {
                 \Storage::disk('public')->delete($donor->don_image);
             }
@@ -70,9 +73,10 @@ class DonorController extends Controller
             $data['don_password'] = bcrypt($data['don_password']);
         }
 
-        $donor->update($data);
-        return $donor;
-    }
+    $donor->update($data);
+    return $donor;
+}
+
 
 
     public function destroy($id)
