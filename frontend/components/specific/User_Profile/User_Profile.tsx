@@ -20,12 +20,22 @@ interface User {
   don_image?: string;
 }
 
+interface Donation {
+  id: string;
+  created_at: string;
+  donation_type: string;
+  value: string;
+  ong: {
+    ong_name: string;
+  };
+}
+
 export default function User_Profile() {
   const [openModal, setOpenModal] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [donations, setDonations] = useState<Donation[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Campos controlados do formulário
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [cep, setCep] = useState("");
@@ -33,22 +43,29 @@ export default function User_Profile() {
   const [complement, setComplement] = useState("");
 
   useEffect(() => {
-    async function loadUser() {
+    async function loadUserAndDonations() {
       try {
+        // Pega o usuário autenticado
         const data = await AuthService.request<User>("/api/auth/donor/me");
         setUser(data);
 
-        // Inicializa os campos do formulário com os dados do usuário
+        // Inicializa campos para edição
         setEmail(data.don_email || "");
         setPhone(data.don_phone || "");
         setCep(data.don_cep || "");
         setHouseNumber(data.don_houseNumber || "");
         setComplement(data.don_complement || "");
+
+        // Busca as doações do doador
+        const donationsData = await AuthService.request<Donation[]>(
+          `/api/donations/donor/${data.id}`
+        );
+        setDonations(donationsData);
       } catch (error) {
-        console.error("Erro ao carregar usuário:", error);
+        console.error("Erro ao carregar usuário ou doações:", error);
       }
     }
-    loadUser();
+    loadUserAndDonations();
   }, []);
 
   // Fecha o modal e salva alterações
@@ -96,10 +113,6 @@ export default function User_Profile() {
     }
   };
 
-  const doadores = [
-    { data: "16/04/2025", tipo: "Dinheiro", valor: "R$ 30,00", ong: "SOS Gatinhos" },
-  ];
-
   if (!user) return <p>Carregando perfil...</p>;
 
   return (
@@ -137,15 +150,44 @@ export default function User_Profile() {
           <p style={{ fontSize: 18, marginBottom: 5 }}>
             Cep: {user.don_cep || "não informado"}
           </p>
-          <p style={{ display: "flex", alignItems: "center", fontSize: 18, marginBottom: 5 }}>
-            <Image src="/Location.svg" alt="localização" width={20} height={20} style={{ marginRight: 5 }} />
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontSize: 18,
+              marginBottom: 5,
+            }}
+          >
+            <Image
+              src="/Location.svg"
+              alt="localização"
+              width={20}
+              height={20}
+              style={{ marginRight: 5 }}
+            />
             {user.don_location || "Brasil"}
           </p>
-          <p style={{ display: "flex", alignItems: "center", fontSize: 18, marginBottom: 5 }}>
-            <Image src="/clock.svg" alt="relógio" width={20} height={20} style={{ marginRight: 5 }} />
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontSize: 18,
+              marginBottom: 5,
+            }}
+          >
+            <Image
+              src="/clock.svg"
+              alt="relógio"
+              width={20}
+              height={20}
+              style={{ marginRight: 5 }}
+            />
             Participa desde {user.don_since || "julho de 2025"}
           </p>
-          <button className={styles.editButton} onClick={() => setOpenModal("modal1")}>
+          <button
+            className={styles.editButton}
+            onClick={() => setOpenModal("modal1")}
+          >
             Editar Perfil
           </button>
         </div>
@@ -176,6 +218,7 @@ export default function User_Profile() {
         </button>
       </div>
 
+      {/* Tabela de doações */}
       <div className={styles.tableContent}>
         <table className={styles.tableDonations}>
           <thead>
@@ -187,17 +230,41 @@ export default function User_Profile() {
             </tr>
           </thead>
           <tbody>
-            {doadores.map((doador, index) => (
-              <tr key={`${doador.data}-${index}`}>
-                <td className={styles.rowTable}>{doador.data}</td>
-                <td className={styles.rowTable}>{doador.tipo}</td>
-                <td className={styles.rowTable}>{doador.valor}</td>
-                <td className={styles.rowTable}>{doador.ong}</td>
-              </tr>
-            ))}
-          </tbody>
+  {donations.length > 0 ? (
+    donations.map((donation) => {
+      console.log("Doação:", donation);
+      return (
+        <tr key={donation.id}>
+          <td className={styles.rowTable}>
+            {new Date(donation.created_at).toLocaleDateString("pt-BR")}
+          </td>
+          <td className={styles.rowTable}>
+            {donation.donation_type || "Desconhecido"}
+          </td>
+          <td className={styles.rowTable}>
+            {Number(donation.value).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </td>
+          <td className={styles.rowTable}>
+            {donation.ong?.ong_name || "ONG não informada"}
+          </td>
+        </tr>
+      );
+    })
+  ) : (
+    <tr>
+      <td colSpan={4} className={styles.rowTable}>
+        Nenhuma doação encontrada.
+      </td>
+    </tr>
+  )}
+</tbody>
+
         </table>
       </div>
+
 
       {/* MODAL: Informações pessoais */}
       {openModal === "modal1" && (
@@ -206,7 +273,9 @@ export default function User_Profile() {
             <h1 style={{ marginBottom: 30 }}>Editar Perfil</h1>
 
             <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="email">E-mail:</label>
+              <label className={styles.labelForms} htmlFor="email">
+                E-mail:
+              </label>
               <input
                 className={styles.inputForms}
                 id="email"
@@ -217,7 +286,9 @@ export default function User_Profile() {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="telefone">Telefone:</label>
+              <label className={styles.labelForms} htmlFor="telefone">
+                Telefone:
+              </label>
               <input
                 className={styles.inputForms}
                 id="telefone"
@@ -228,7 +299,9 @@ export default function User_Profile() {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="cep">Cep (opcional):</label>
+              <label className={styles.labelForms} htmlFor="cep">
+                Cep (opcional):
+              </label>
               <input
                 className={styles.inputForms}
                 id="cep"
@@ -239,7 +312,9 @@ export default function User_Profile() {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="numero">Número da Casa (opcional):</label>
+              <label className={styles.labelForms} htmlFor="numero">
+                Número da Casa (opcional):
+              </label>
               <input
                 className={styles.inputForms}
                 id="numero"
@@ -250,7 +325,9 @@ export default function User_Profile() {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="complemento">Complemento:</label>
+              <label className={styles.labelForms} htmlFor="complemento">
+                Complemento:
+              </label>
               <input
                 className={styles.inputForms}
                 id="complemento"
@@ -267,7 +344,7 @@ export default function User_Profile() {
         </div>
       )}
 
-      {/* MODAL 2 e 3 só para exemplo, podem continuar iguais */}
+      {/* MODAL 2 e 3 */}
       {openModal === "modal2" && (
         <div className={styles.modalOverlay}>
           <div className={styles.userInformationModal}>
