@@ -9,20 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::table('ongs', function (Blueprint $table) {
-            //
+            $table->string('ong_image')->nullable()->after('ong_cnpj');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::table('ongs', function (Blueprint $table) {
-            //
+            $table->dropColumn('ong_image');
         });
     }
 };
