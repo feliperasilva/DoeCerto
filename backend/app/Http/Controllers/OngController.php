@@ -65,8 +65,15 @@ class OngController extends Controller
             'ong_email' => 'sometimes|required|email|unique:ongs,ong_email,' . $ong->id,
             'ong_password' => 'sometimes|required|string|min:8|confirmed',
             'ong_cnpj' => 'sometimes|required|string|unique:ongs,ong_cnpj,' . $ong->ong_id . ',ong_id',
+            'ong_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        if ($request->hasFile('ong_image')) {
+            // Opcional: delete a imagem antiga se quiser (ver abaixo)
+            $path = $request->file('ong_image')->store('ongs', 'public');
+            $validated['ong_image'] = $path;
+        }
+        
         if (isset($validated['ong_cnpj']) && $validated['ong_cnpj'] !== $ong->ong_cnpj) {
             if (!CnpjValidatorService::validate($validated['ong_cnpj'])) {
                 return response()->json([
