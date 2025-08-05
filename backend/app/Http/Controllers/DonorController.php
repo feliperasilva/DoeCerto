@@ -15,23 +15,28 @@ class DonorController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'don_name' => 'required|string|max:255',
-            'don_email' => 'required|email|unique:donors,don_email',
-            'don_password' => 'required|string|min:8',
-            'don_description' => 'nullable|string|max:255',
-            'don_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'don_name'         => 'required|string|max:255',
+            'don_email'        => 'required|email|unique:donors,don_email',
+            'don_password'     => 'required|string|min:8',
+            'don_description'  => 'nullable|string|max:255',
+            'don_image'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'don_phone'        => 'nullable|string|max:20',
+            'don_cep'          => 'nullable|string|max:10',
+            'don_houseNumber'  => 'nullable|string|max:10',
+            'don_complement'   => 'nullable|string|max:255',
         ]);
-    
+
         if ($request->hasFile('don_image')) {
             $image = $request->file('don_image');
-            $path = $image->store('Donor', 'public'); // salva em public/Donor
+            $path = $image->store('Donor', 'public');
             $data['don_image'] = $path;
         }
-    
+
         $data['don_password'] = bcrypt($data['don_password']);
-    
+
         return Donor::create($data);
     }
+
 
     public function show($id)
     {
