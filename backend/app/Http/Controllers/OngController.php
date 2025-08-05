@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ong;
 use App\Services\CnpjValidatorService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OngController extends Controller
 {
@@ -97,7 +98,13 @@ class OngController extends Controller
      */
     public function destroy(Ong $ong)
     {
+        // Deletar a imagem da ONG se existir
+        if ($ong->ong_image) {
+            Storage::disk('public')->delete($ong->ong_image);
+        }
+
         $ong->delete();
+
         return response()->json(null, 204);
     }
 }
