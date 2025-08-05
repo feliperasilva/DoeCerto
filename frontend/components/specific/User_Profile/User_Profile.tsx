@@ -12,7 +12,7 @@ interface User {
   don_email: string;
   don_phone?: string;
   don_cep?: string;
-  don_number?: string;
+  don_houseNumber?: string;
   don_complement?: string;
   don_location?: string;
   don_since?: string;
@@ -25,11 +25,25 @@ export default function User_Profile() {
   const [user, setUser] = useState<User | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Campos controlados do formulário
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [cep, setCep] = useState("");
+  const [houseNumber, setHouseNumber] = useState("");
+  const [complement, setComplement] = useState("");
+
   useEffect(() => {
     async function loadUser() {
       try {
         const data = await AuthService.request<User>("/api/auth/donor/me");
         setUser(data);
+
+        // Inicializa os campos do formulário com os dados do usuário
+        setEmail(data.don_email || "");
+        setPhone(data.don_phone || "");
+        setCep(data.don_cep || "");
+        setHouseNumber(data.don_houseNumber || "");
+        setComplement(data.don_complement || "");
       } catch (error) {
         console.error("Erro ao carregar usuário:", error);
       }
@@ -37,12 +51,33 @@ export default function User_Profile() {
     loadUser();
   }, []);
 
-  const handleClose = () => setOpenModal(null);
+  // Fecha o modal e salva alterações
+  const handleClose = async () => {
+    if (!user) return;
 
+    try {
+      const formData = new FormData();
+      formData.append("_method", "PUT");
+      formData.append("don_email", email);
+      formData.append("don_phone", phone);
+      formData.append("don_cep", cep);
+      formData.append("don_houseNumber", houseNumber);
+      formData.append("don_complement", complement);
+
+      const response = await AuthService.updateDonor(user.id, formData);
+      setUser(response.data);
+      setOpenModal(null);
+    } catch (error) {
+      console.error("Erro ao atualizar usuário:", error);
+    }
+  };
+
+  // Dispara o clique no input file escondido
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
 
+  // Upload da imagem do usuário
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0 || !user) return;
 
@@ -50,7 +85,7 @@ export default function User_Profile() {
 
     const formData = new FormData();
     formData.append("don_image", file);
-    formData.append("_method", "PUT"); // necessário para Laravel
+    formData.append("_method", "PUT");
 
     try {
       const response = await AuthService.updateDonor(user.id, formData);
@@ -84,7 +119,6 @@ export default function User_Profile() {
             backgroundPosition: "center",
           }}
         ></div>
-
 
         <input
           ref={fileInputRef}
@@ -173,27 +207,57 @@ export default function User_Profile() {
 
             <div className={styles.formGroup}>
               <label className={styles.labelForms} htmlFor="email">E-mail:</label>
-              <input className={styles.inputForms} id="email" type="email" defaultValue={user.don_email} />
+              <input
+                className={styles.inputForms}
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.labelForms} htmlFor="telefone">Telefone:</label>
-              <input className={styles.inputForms} id="telefone" type="tel" defaultValue={user.don_phone || ""} />
+              <input
+                className={styles.inputForms}
+                id="telefone"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.labelForms} htmlFor="cep">Cep (opcional):</label>
-              <input className={styles.inputForms} id="cep" type="text" defaultValue={user.don_cep || ""} />
+              <input
+                className={styles.inputForms}
+                id="cep"
+                type="text"
+                value={cep}
+                onChange={(e) => setCep(e.target.value)}
+              />
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.labelForms} htmlFor="numero">Número da Casa (opcional):</label>
-              <input className={styles.inputForms} id="numero" type="number" defaultValue={user.don_number || ""} />
+              <input
+                className={styles.inputForms}
+                id="numero"
+                type="number"
+                value={houseNumber}
+                onChange={(e) => setHouseNumber(e.target.value)}
+              />
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.labelForms} htmlFor="complemento">Complemento:</label>
-              <input className={styles.inputForms} id="complemento" type="text" defaultValue={user.don_complement || ""} />
+              <input
+                className={styles.inputForms}
+                id="complemento"
+                type="text"
+                value={complement}
+                onChange={(e) => setComplement(e.target.value)}
+              />
             </div>
 
             <button onClick={handleClose} className={styles.modalClose}>
@@ -203,23 +267,27 @@ export default function User_Profile() {
         </div>
       )}
 
-      {/* MODAIS 2 e 3 */}
+      {/* MODAL 2 e 3 só para exemplo, podem continuar iguais */}
       {openModal === "modal2" && (
         <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <button onClick={handleClose} className={styles.modalClose}>×</button>
-            <h2>Modal 2</h2>
-            <p>Conteúdo do segundo modal.</p>
+          <div className={styles.userInformationModal}>
+            <h1>Editar Favoritos</h1>
+            {/* Conteúdo do modal 2 */}
+            <button className={styles.modalClose} onClick={() => setOpenModal(null)}>
+              Fechar
+            </button>
           </div>
         </div>
       )}
 
       {openModal === "modal3" && (
         <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <button onClick={handleClose} className={styles.modalClose}>×</button>
-            <h2>Modal 3</h2>
-            <p>Conteúdo do terceiro modal.</p>
+          <div className={styles.userInformationModal}>
+            <h1>Editar Descrição</h1>
+            {/* Conteúdo do modal 3 */}
+            <button className={styles.modalClose} onClick={() => setOpenModal(null)}>
+              Fechar
+            </button>
           </div>
         </div>
       )}
