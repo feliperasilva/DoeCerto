@@ -29,6 +29,9 @@ Route::apiResource('donations', DonationController::class);
 Route::get('donations/donor/{donorId}', [DonationController::class, 'byDonor']);
 Route::get('donations/ong/{ongId}', [DonationController::class, 'byOng']);
 
+Route::middleware('auth:sanctum')->get('/auth/donor/me', function (Request $request) {
+   return response()->json($request->user());
+});
 
 
 
