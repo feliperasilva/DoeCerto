@@ -64,3 +64,68 @@
     border: 1px solid #CFA6F7;
 
 }
+
+.addItens{
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.buttonNext{
+    width: fit-content;
+    font-size: 28px;
+    font-weight: 520;
+    margin: 50px 0 20px 0;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px 10px 30px;
+    border-radius: 15px;
+    color: #6B39A7;
+    background-color: white;
+    border: 4px solid #6B39A7;
+}
+
+.withdrawalData{
+    display: flex;
+    flex-direction: column;
+    padding: 15px 10px 10px 40px; 
+}
+
+.nameAddress{
+    font-weight: 600;
+}
+
+.addressDataInput{
+    width: 350px;
+    height: 40px;
+    padding: 5px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid #CFA6F7;
+}
+
+.buttonSearch{
+    background-color: #6B39A7;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 5px 30px 5px 30px;
+}
+
+.buttonStart{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.buttonOption{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
