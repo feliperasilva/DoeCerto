@@ -90,6 +90,20 @@ class AuthService {
   public static isAuthenticated(): boolean {
     return !!this.token;
   }
+
+  public static async updateDonor(id: string, formData: FormData) {
+    try {
+      const response = await this.api.post(`/api/donors/${id}`, formData, {
+        headers: {
+          ...this.getAuthHeaders(),
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error: any) {
+      throw error.response?.data?.message || "Erro ao atualizar doador.";
+    }
+  }
 }
 
 export default AuthService;
