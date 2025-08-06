@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ong;
 use App\Services\CnpjValidatorService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OngController extends Controller
 {
@@ -27,8 +28,13 @@ class OngController extends Controller
             'ong_email' => 'required|email|unique:ongs,ong_email',
             'ong_password' => 'required|string|min:8|confirmed',
             'ong_cnpj' => 'required|string|unique:ongs,ong_cnpj',
+            'ong_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        if ($request->hasFile('ong_image')) {
+            $path = $request->file('ong_image')->store('ongs', 'public');
+            $validated['ong_image'] = $path;
+        }        
         
         if (!CnpjValidatorService::validate($validated['ong_cnpj'])) {
             return response()->json([
@@ -60,8 +66,15 @@ class OngController extends Controller
             'ong_email' => 'sometimes|required|email|unique:ongs,ong_email,' . $ong->id,
             'ong_password' => 'sometimes|required|string|min:8|confirmed',
             'ong_cnpj' => 'sometimes|required|string|unique:ongs,ong_cnpj,' . $ong->ong_id . ',ong_id',
+            'ong_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        if ($request->hasFile('ong_image')) {
+            // Opcional: delete a imagem antiga se quiser (ver abaixo)
+            $path = $request->file('ong_image')->store('ongs', 'public');
+            $validated['ong_image'] = $path;
+        }
+        
         if (isset($validated['ong_cnpj']) && $validated['ong_cnpj'] !== $ong->ong_cnpj) {
             if (!CnpjValidatorService::validate($validated['ong_cnpj'])) {
                 return response()->json([
@@ -85,7 +98,13 @@ class OngController extends Controller
      */
     public function destroy(Ong $ong)
     {
+        // Deletar a imagem da ONG se existir
+        if ($ong->ong_image) {
+            Storage::disk('public')->delete($ong->ong_image);
+        }
+
         $ong->delete();
+
         return response()->json(null, 204);
     }
 }
