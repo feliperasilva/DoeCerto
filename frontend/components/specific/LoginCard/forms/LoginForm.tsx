@@ -30,7 +30,7 @@ export default function LoginForm() {
 
       setAuthError(null);
 
-      router.push("/Homedonor");
+      router.push("/donor/home");
     } catch (error: any) {
       const msg =
         error === "The provided credentials are incorrect."

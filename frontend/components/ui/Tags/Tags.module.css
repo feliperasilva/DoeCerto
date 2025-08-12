@@ -1,0 +1,14 @@
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tags span {
+  background: var(--color-secondary);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--color-contrast);
+  font-weight: 500;
+}
