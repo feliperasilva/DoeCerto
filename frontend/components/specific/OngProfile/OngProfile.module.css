@@ -122,20 +122,6 @@
   margin-top: 20px;
 }
 
-.tableWrapper {
-  overflow-x: auto;
-}
-
-.donationTable {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.donationTable th, .donationTable td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
 .thPurple {
   color: #6B39A7;
   font-weight: bold;
