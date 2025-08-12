@@ -1,270 +1,155 @@
-.donationContent {
+.container {
+  background: #f5f5f5;
   display: flex;
-  justify-content: center;
-  overflow-x: hidden;
-  gap: 20px;
-  width: 100%;
-  margin: 0;
-  height: 100%;
-}
-/*Lado esquerdo*/
-.donationLeftBox {
-  display: flex;
+  align-self: flex-start;
   flex-direction: column;
-  background-color: #f5f5f5;
-  border-radius: 30px;
-  padding: 15px;
+  width: 100%;
 }
-
-.donationOngImage {
-  width: 180px;
-  height: 180px;
+.header {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  border-radius: 15px;
-}
-
-.donationHeaderLeft {
-  display: flex;
-  flex-direction: row;
   gap: 20px;
-}
-
-.donationTitleOngLeft {
-  color: #6b39a7;
-  font-size: 55px;
-  font-weight: 900;
-  margin-right: 170px;
-}
-
-.donationParagraphLeft {
-  margin: 0px;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.donationButtonFavorite {
-  gap: 5px;
-  display: inline-flex;
+  background: #dcdcdc;
+  padding: 15px;
+  border-radius: 12px;
   align-items: center;
-  line-height: 1;
-  margin-top: 20px;
-  border-radius: 15px;
-  padding: 8px 15px;
-  font-size: 18px;
-  font-weight: 600;
+}
+.header img {
+  width: 100px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.header-content {
+  flex-grow: 1;
+}
+.header-content h1 {
+  color: #6a3aa3;
+  margin: 0;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.verified {
+  background: #6a3aa3;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 8px;
+  font-size: 1rem;
+  display: inline-block;
+}
+.rating {
+  margin-top: 4px;
+}
+.rating span {
+  color: #444;
+  font-size: 1.2rem;
+}
+.filled {
+  color: #6a3aa3;
+}
+.btn_edit {
+  background: #6a3aa3;
   color: white;
   border: none;
-  background-color: #6b39a7;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
 }
-
-.donationForms {
+.sectionAbout {
+  margin-top: 30px;
+}
+.section h2 {
+  background: #6a3aa3;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin: 0 0 15px 0;
+  font-size: 1.4rem;
+}
+.about,
+.contacts,
+.categories,
+.items-interest {
+  background: white;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
   display: flex;
-  flex-direction: column;
-}
-
-.donationPaymentTitle {
-  font-size: 47px;
-  font-weight: 700;
-  margin: 60px 0 12px;
-  color: #333;
-}
-
-.donationPaymentCards {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
-
-.paymentCard {
-  background: #6b39a7;
-  color: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  display: flex;
-  flex-direction: column;
-}
-
-.cardTop {
-  flex-direction: row;
-  gap: 10px;
-  display: inline-flex;
-  align-items: center;
-}
-
-.cardTopP {
-  font-size: 30px;
-  font-weight: bolder;
-}
-
-.paymentButton {
-  margin-top: 25px;
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-}
-
-.paymentIcon {
-  margin-bottom: 8px;
-}
-
-.button1 {
-  width: 80px;
-  height: 30px;
-  background-color: #9540ff;
-  border-radius: 5px;
-  border: none;
-}
-
-.button2 {
-  width: 150px;
-  height: 40px;
-  background-color: white;
-  border-radius: 5px;
-  border: none;
-}
-/*Fim lado esquerdo*/
-/*Lado direito*/
-.donationRightBox {
-  display: flex;
-  flex-direction: column;
-  background-color: #f5f5f5;
-  border-radius: 30px;
-  padding: 5px 25px;
-}
-
-.donationTitleRight {
-  color: #333;
-  font-size: 55px;
-  font-weight: bolder;
-  margin-bottom: 20px;
-}
-
-.donationParagraphRight {
-  color: #333;
-  font-size: 20px;
+.about_text {
+  flex: 1 1 100%;
+  font-size: 0.8rem;
   font-weight: 600;
 }
-
-.textIcon:not(:last-child) {
-  margin-bottom: 8px;
+.categories span {
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  cursor: default;
 }
-
-.textIcon {
-  gap: 15px;
-  display: flex;
-  align-items: center;
-  margin: 25px 0px;
-}
-
-.dataIcon {
-  font-size: 25px;
-}
-
-.donationCategory {
-  display: flex;
-  gap: 10px;
-}
-
-.categories {
-  width: 100px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-.category {
-  width: 100px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  font-weight: bold;
-  background-color: #fff;
-}
-
-.hrRow {
-  background-color: #999;
-  height: 2px;
-  margin: 15px 0px;
-}
-/*fim lado direito*/
-
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modalContent {
-  background-color: white;
-  padding: 24px;
-  border-radius: 20px;
-  width: 400px;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-
-.modalOngData {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
-.modalClose {
-  position: absolute;
-  top: 10px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #6b39a7;
-  cursor: pointer;
-}
-
-.modalTitle {
-  font-size: 24px;
-  color: #6b39a7;
-  margin-bottom: 16px;
-  font-weight: bold;
-}
-
-.qrCode {
-  border: 2px dashed gray;
-  padding: 40px;
-  margin-bottom: 16px;
-  color: gray;
-}
-
-.modalOngName {
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.modalConfirm {
-  margin-top: 16px;
-  padding: 10px 20px;
-  background-color: #6b39a7;
+.highlight {
+  background: #6a3aa3;
   color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  border-color: #6a3aa3;
+}
+.contacts div {
+  flex: 1 1 30%;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+.accounts,
+.items-interest-box {
+  background: #6a3aa3;
+  color: white;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  max-width: 45%;
+}
+.accounts b,
+.items-interest-box b {
+  font-weight: 700;
+}
+.accounts p,
+.items-interest-box p {
+  margin: 4px 0;
+  font-weight: 700;
+}
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.linha,
+.lt {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #ddd;
+}
+.linha {
+  color: #6a3aa3;
+  font-weight: 600;
+}
+.lt:nth-child(4) {
+  font-weight: 700;
+}
+@media (max-width: 700px) {
+  .accounts,
+  .items-interest-box {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

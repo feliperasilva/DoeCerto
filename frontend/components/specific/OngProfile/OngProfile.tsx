@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import styles from "./OngProfile.module.css";
 import StarRating from "../../StarRating";
 import { FaHeart, FaMoneyCheckAlt, FaGift } from "react-icons/fa";
@@ -8,156 +6,144 @@ import { BsPatchCheckFill } from "react-icons/bs";
 import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 import { IoReturnUpBackOutline } from "react-icons/io5";
 
-export default function OngProfile() {
-  const [showModal, setShowModal] = useState(false);
-
+export default function SosGatinho() {
   return (
-    <div className={styles.donationContent}>
-      {/* lado esquerdo */}
-      <div className={styles.donationLeftBox}>
-        {/* cabeçalho lado esquerdo */}
-        <div className={styles.donationHeaderLeft}>
-          <div className={styles.donationOngImage}>{/* imagem */}</div>
-
-          <div>
-            <p className={styles.donationTitleOngLeft}>
-              SOS Gatinho
-              <BsPatchCheckFill style={{ marginLeft: 8, color: "#6B39A7" }} />
-            </p>
-            <p className={styles.donationParagraphLeft}>Deixe sua Avaliação</p>
-            <StarRating rating={4.5} />
-            <p>Muito bom 4.5</p>
-            <button className={styles.donationButtonFavorite}>
-              <FaHeart size={20} />
-              Favoritar
-            </button>
-          </div>
-        </div>
-        {/* fim cabeçalho lado esquerdo */}
-
-        {/* formas de pagamento */}
-        <div className={styles.donationForms}>
-          <h3 className={styles.donationPaymentTitle}>
-            Formas de contribuição
-          </h3>
-
-          <div className={styles.donationPaymentCards}>
-            {/* card esquerdo */}
-            <div className={styles.paymentCard}>
-              <div className={styles.cardTop}>
-                <FaMoneyCheckAlt className={styles.paymentIcon} size={40} />
-                <p className={styles.cardTopP}>Doação de Dinheiro</p>
-              </div>
-
-              <div className={styles.paymentButton}>
-                <button className={styles.button1}></button>
-                <button className={styles.button1}></button>
-                <button
-                  className={styles.button2}
-                  onClick={() => setShowModal(true)}
-                ></button>
-              </div>
-            </div>
-            {/* fim card esquerdo */}
-            {/* card direito */}
-            <div className={styles.paymentCard}>
-              <div className={styles.cardTop}>
-                <FaGift className={styles.paymentIcon} size={40} />
-                <p className={styles.cardTopP}>Doação de Itens</p>
-              </div>
-              <div className={styles.paymentButton}>
-                <button className={styles.button1}></button>
-                <button className={styles.button1}></button>
-                <button className={styles.button2}></button>
-              </div>
-            </div>
-            {/* fim card direito */}
-          </div>
-        </div>
-        {/* fim formas de pagamento */}
-      </div>
-      {/* fim lado esquerdo */}
-
-      {/* lado direito */}
-      <div className={styles.donationRightBox}>
-        {/* cabeçalho lado direito */}
-        <div className={styles.donationHeaderRight}>
-          <h1 className={styles.donationTitleRight}>
-            Sobre a ONG
-            <IoReturnUpBackOutline
-              size={40}
-              style={{ color: "#6B39A7", marginLeft: "160px" }}
-            />
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <img src="" alt="Gato" />
+        <div className={styles.headercontent}>
+          <h1>
+            SOS Gatinho <span className={styles.verified}></span>
           </h1>
-        </div>
-        {/* fim cabeçalho lado direito */}
-        {/* descrição da ONG lado direito */}
-        <div className={styles.donationParagraphRight}>
-          <p>
-            A ONG é dedicada a amparar e transformar a vida dos <br />
-            animais em situação de vulnerabilidade, <br />
-            fornecem lar temporário, até que eles estejam <br />
-            em boa saúde para que sejam inserido no <br />
-            programa de adoção.
-          </p>
-        </div>
-        {/* fim descrição da ONG lado direito */}
-
-        {/* informações da ONG lado direito */}
-        <hr className={styles.hrRow} />
-        <div className={styles.donationDataONG}>
-          <p className={styles.textIcon}>
-            <MdEmail className={styles.dataIcon} /> contato@exemplo.com
-          </p>
-          <p className={styles.textIcon}>
-            <MdPhone className={styles.dataIcon} /> (81) 91234-5678
-          </p>
-          <p className={styles.textIcon}>
-            <MdLocationOn className={styles.dataIcon} /> Rua Exemplo, 123 -
-            Igarassu, PE
-          </p>
-        </div>
-        {/* fim informações da ONG lado direito */}
-
-        {/* categorias */}
-        <hr className={styles.hrRow} />
-        <div className={styles.donationCategory}>
-          <div className={styles.categories}>Categorias</div>
-          <div className={styles.category}>Animal</div>
-          <div className={styles.category}>Adoção</div>
-          <div className={styles.category}>Gatos</div>
-        </div>
-        {/*fim categorias */}
-      </div>
-      {/* fim lado direito */}
-
-      {showModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
-            <button
-              onClick={() => setShowModal(false)}
-              className={styles.modalClose}
-            >
-              ×
-            </button>
-            <h2 className={styles.modalTitle}>Doar dinheiro</h2>
-            <div className={styles.qrCode}>Qr code</div>
-            <div className={styles.modalOngData}>
-              <p className={styles.modalOngName}>SOS Gatinhos</p>
-              <p>
-                <strong>Chave PIX:</strong>
-              </p>
-              <p>(00) 00000-0000</p>
-              <p>
-                <strong>Conta:</strong>
-              </p>
-              <p>Banco 123 Agência 0000 Conta 12345-6</p>
-            </div>
-            <div style={{ marginBottom: "5px" }}></div>
-            <button className={styles.modalConfirm}>Confirmar</button>
+          <div className={styles.rating}>
+            {" "}
+            title="4.0 Muito boa"
+            <span className="filled">&#9733;</span>
+            <span className="filled">&#9733;</span>
+            <span className="filled">&#9733;</span>
+            <span className="filled">&#9733;</span>
+            <span>&#9733;</span>
           </div>
+          <small>4.0 Muito boa</small>
         </div>
-      )}
+        <button className={styles.btn_edit}>Editar ✏️</button>
+      </header>
+
+      <section className={styles.sectionAbout}>
+        <div className={styles.about_text}>
+          <h3>Sobre a ONG</h3>
+          <p>
+            A ONG é dedicada a amparar e transformar a vida dos animais em
+            situação de vulnerabilidade, fornecem lar temporário, até que eles
+            estejam em boa saúde para que sejam o processo de adoção
+          </p>
+        </div>
+      </section>
+
+      <section className={styles.sectioncategories}>
+        <span className={styles.highlight}>Proteção Animal</span>
+        <span>Saúde</span>
+        <span>Combate à Fome</span>
+        <span>Educação</span>
+        <span>Meio Ambiente</span>
+      </section>
+
+      <section className={styles.sectioncontacts}>
+        <div>
+          <strong>Email:</strong>
+          <br />
+          SOSGatinhos@gmail.com
+        </div>
+        <div>
+          <strong>Telefone:</strong>
+          <br />
+          +55 81 91234-5678
+        </div>
+        <div>
+          <strong>Localização:</strong>
+          <br />
+          SOSGatinhos@gmail.com
+        </div>
+      </section>
+
+      <section
+        className={styles.sectionaccounts_items}
+        style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}
+      >
+        <div className={styles.accounts}>
+          <h2>Contas Adicionadas</h2>
+          <p>
+            <b>Banco:</b> Banco do Brasil
+          </p>
+          <p>
+            <b>Agência:</b> 4364-8
+          </p>
+          <p>
+            <b>Conta:</b> 85448-5
+          </p>
+        </div>
+
+        <div className={styles.items_interest_box}>
+          <h2>Itens de interesse</h2>
+          <p>
+            <b>Ração</b>
+          </p>
+          <p>
+            <b>Coleira</b>
+          </p>
+          <p>
+            <b>Material de limpeza</b>
+          </p>
+          <p>
+            <b>Papel higiênico</b>
+          </p>
+        </div>
+      </section>
+
+      <section className={styles.sectiondonations_table}>
+        <table className={styles.tabela}>
+          <thead>
+            <tr className={styles.cabecalho}>
+              <th className={styles.linha}>Nome</th>
+              <th className={styles.linha}>Data</th>
+              <th className={styles.linha}>Tipo</th>
+              <th className={styles.linha}>Quantidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className={styles.cabecalho}>
+              <td className={styles.lt}>Paulo Ricardo</td>
+              <td className={styles.lt}>16/04/2024</td>
+              <td className={styles.lt}>Dinheiro</td>
+              <td className={styles.lt}>R$ 3000,00</td>
+            </tr>
+            <tr className={styles.cabecalho}>
+              <td className={styles.lt}>Ryon Xavier</td>
+              <td className={styles.lt}>16/04/2024</td>
+              <td className={styles.lt}>Ração</td>
+              <td className={styles.lt}>10.000 KG</td>
+            </tr>
+            <tr className={styles.cabecalho}>
+              <td className={styles.lt}>Marcos Vinicius</td>
+              <td className={styles.lt}>16/04/2024</td>
+              <td className={styles.lt}>Dinheiro</td>
+              <td className={styles.lt}>R$ 1.000,00</td>
+            </tr>
+            <tr className={styles.cabecalho}>
+              <td className={styles.lt}>Felipe Romero</td>
+              <td className={styles.lt}>16/04/2024</td>
+              <td className={styles.lt}>Ração</td>
+              <td className={styles.lt}>100 KG</td>
+            </tr>
+            <tr className={styles.cabecalho}>
+              <td className={styles.lt}>Weydson Lino</td>
+              <td className={styles.lt}>16/04/2024</td>
+              <td className={styles.lt}>Coleira</td>
+              <td className={styles.lt}>1 unidade</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }
