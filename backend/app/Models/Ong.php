@@ -22,6 +22,7 @@ class Ong extends Model
         'ong_password',
         'ong_cnpj',
         'ong_image',
+        'approved',
     ];
 
     protected $hidden = [
