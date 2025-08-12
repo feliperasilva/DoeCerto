@@ -1,124 +1,131 @@
 import React from 'react';
-import styles from "./OngProfile.module.css";
+import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaEdit, FaStar, FaRegStar } from 'react-icons/fa';
+import styles from './OngProfile.module.css';
 
-export default function SosGatinho() {
+const OngProfile = () => {
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <img src="" alt="Gato" />
-        <div className={styles.headercontent}>
-          <h1>
-            SOS Gatinho <span className={styles.verified}></span>
-          </h1>
-          <div className={styles.rating}> title="4.0 Muito boa"
-            <span className="filled">&#9733;</span>
-            <span className="filled">&#9733;</span>
-            <span className="filled">&#9733;</span>
-            <span className="filled">&#9733;</span>
-            <span>&#9733;</span>
+      {/* Cabeçalho */}
+      <div className={styles.header}>
+        <div className={styles.profileInfo}>
+          <img src="/gatinho.jpg" alt="Foto do gato" className={styles.profileImage} />
+          <div>
+            <h1 className={styles.title}>
+              SOS Gatinho <span className={styles.verificado}>✔</span>
+            </h1>
+            <p className={styles.ratingLabel}>Avaliações</p>
+            <div className={styles.rating}>
+              <FaStar /><FaStar /><FaStar /><FaStar /><FaRegStar />
+              <span className={styles.ratingText}>4.0 Muito boa</span>
+            </div>
           </div>
-          <small>4.0 Muito boa</small>
         </div>
-        <button className={styles.btn_edit}>Editar ✏️</button>
-      </header>
+        <button className={styles.editButton}>
+          <strong>Editar</strong> <FaEdit />
+        </button>
+      </div>
 
-      <section className={styles.sectionAbout}>
-        <div className={styles.about_text}>
-          <h3>Sobre a ONG</h3>
-          <p>
-            A ONG é dedicada a amparar e transformar a vida dos animais em situação de vulnerabilidade, fornecem lar temporário, até que eles estejam em boa saúde para que sejam o processo de adoção
-          </p>
-        </div>
-      </section>
+      {/* Sobre a ONG */}
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Sobre a ONG</h2>
+        <p>
+          A ONG é dedicada a amparar e transformar a vida dos animais em situação de vulnerabilidade,
+          fornecendo lar temporário até que eles estejam em boa saúde para passar pelo processo de adoção.
+        </p>
+      </div>
 
-      <section className={styles.sectioncategories}>
-        <span className={styles.highlight}>Proteção Animal</span>
-        <span>Saúde</span>
-        <span>Combate à Fome</span>
-        <span>Educação</span>
-        <span>Meio Ambiente</span>
-      </section>
+      {/* Contato */}
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Contato</h2>
+        <p className={styles.contactItem}><FaEnvelope /> SOSGatinho@gmail.com</p>
+        <p className={styles.contactItem}><FaPhoneAlt /> +55 81 91234-5678</p>
+        <p className={styles.contactItem}><FaMapMarkerAlt /> Recife, PE</p>
+      </div>
 
-      <section className={styles.sectioncontacts}>
-        <div>
-          <strong>Email:</strong>
-          <br />
-          SOSGatinhos@gmail.com
+      {/* Categorias */}
+      <div className={styles.section}>
+        <h2 className={styles.sectionTitle}>Categoria</h2>
+        <div className={styles.categories}>
+          <span>Proteção Animal</span>
+          <span>Saúde</span>
+          <span>Combate à Fome</span>
+          <span>Educação</span>
+          <span>Meio Ambiente</span>
         </div>
-        <div>
-          <strong>Telefone:</strong>
-          <br />
-          +55 81 91234-5678
-        </div>
-        <div>
-          <strong>Localização:</strong>
-          <br />
-          SOSGatinhos@gmail.com
-        </div>
-      </section>
+      </div>
 
-      <section className={styles.sectionaccounts_items} style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-        <div className={styles.accounts}>
+      {/* Contas e Itens */}
+      <div className={styles.row}>
+        <div className={styles.boxPurple}>
           <h2>Contas Adicionadas</h2>
-          <p><b>Banco:</b> Banco do Brasil</p>
-          <p><b>Agência:</b> 4364-8</p>
-          <p><b>Conta:</b> 85448-5</p>
+          <div className={styles.innerWhite}>
+            <p><strong>Banco:</strong> Banco do Brasil</p>
+            <p><strong>Agência:</strong> 4364-8</p>
+            <p><strong>Conta:</strong> 85448-5</p>
+          </div>
         </div>
 
-        <div className={styles.items_interest_box}>
+        <div className={styles.boxPurple}>
           <h2>Itens de interesse</h2>
-          <p><b>Ração</b></p>
-          <p><b>Coleira</b></p>
-          <p><b>Material de limpeza</b></p>
-          <p><b>Papel higiênico</b></p>
+          <div className={styles.innerWhite}>
+            <p>Ração</p>
+            <p>Coleira</p>
+            <p>Material de limpeza</p>
+            <p>Papel higiênico</p>
+          </div>
         </div>
-      </section>
+      </div>
 
-      <section className={styles.sectiondonations_table}> 
-        
-        <table className={styles.tabela}> 
-          <thead>
-            <tr className={styles.cabecalho}> 
-              <th className={styles.linha}>Nome</th>
-              <th className={styles.linha}>Data</th>
-              <th className={styles.linha}>Tipo</th>
-              <th className={styles.linha}>Quantidade</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className={styles.cabecalho}>
-              <td className={styles.lt}>Paulo Ricardo</td>
-              <td className={styles.lt}>16/04/2024</td>
-              <td className={styles.lt}>Dinheiro</td>
-              <td className={styles.lt}>R$ 3000,00</td>
-            </tr>
-            <tr className={styles.cabecalho}>
-              <td className={styles.lt}>Ryon Xavier</td>
-              <td className={styles.lt}>16/04/2024</td>
-              <td className={styles.lt}>Ração</td>
-              <td className={styles.lt}>10.000 KG</td>
-            </tr>
-            <tr className={styles.cabecalho}>
-              <td className={styles.lt}>Marcos Vinicius</td>
-              <td className={styles.lt}>16/04/2024</td>
-              <td className={styles.lt}>Dinheiro</td>
-              <td className={styles.lt}>R$ 1.000,00</td>
-            </tr>
-            <tr className={styles.cabecalho}>
-              <td className={styles.lt}>Felipe Romero</td>
-              <td className={styles.lt}>16/04/2024</td>
-              <td className={styles.lt}>Ração</td>
-              <td className={styles.lt}>100 KG</td>
-            </tr>
-            <tr className={styles.cabecalho}>
-              <td className={styles.lt}>Weydson Lino</td>
-              <td className={styles.lt}>16/04/2024</td>
-              <td className={styles.lt}>Coleira</td>
-              <td className={styles.lt}>1 unidade</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+      {/* Doações */}
+      <div className={styles.tableContainer}>
+      
+        <div className={styles.tableWrapper}>
+          <table className={styles.donationTable}>
+            <thead>
+              <tr>
+                <th className={styles.thPurple}>Nome</th>
+                <th className={styles.thPurple}>Data</th>
+                <th className={styles.thPurple}>Tipo</th>
+                <th className={styles.thPurple}>Quantidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Paulo Ricardo</td>
+                <td>16/04/2024</td>
+                <td>Dinheiro</td>
+                <td>R$ 3.000,00</td>
+              </tr>
+              <tr>
+                <td>Ryan Xavier</td>
+                <td>16/04/2024</td>
+                <td>Ração</td>
+                <td>10.000 KG</td>
+              </tr>
+              <tr>
+                <td>Marcos Vinicius</td>
+                <td>16/04/2024</td>
+                <td>Dinheiro</td>
+                <td>R$ 1.000,00</td>
+              </tr>
+              <tr>
+                <td>Felipe Romero</td>
+                <td>16/04/2024</td>
+                <td>Ração</td>
+                <td>100 KG</td>
+              </tr>
+              <tr>
+                <td>Weydson Lino</td>
+                <td>16/04/2024</td>
+                <td>Coleira</td>
+                <td>1 unidade</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default OngProfile;
