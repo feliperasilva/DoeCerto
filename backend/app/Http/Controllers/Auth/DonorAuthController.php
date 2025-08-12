@@ -4,20 +4,19 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donor;
-use Faker\Provider\ar_EG\Person;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class DonorAuthController extends Controller
 {
-    public function register(Request $request) {
-        
+    public function register(Request $request)
+    {
         $validated = $request->validate([
-            'don_name' => 'required|string|max:255', 
-            'don_email' => 'required|email|unique:donors,don_email', 
-            'don_password' => 'required|string|min:8|confirmed', 
-            'don_description' => 'nullable|string|max:255', 
+            'don_name' => 'required|string|max:255',
+            'don_email' => 'required|email|unique:donors,don_email',
+            'don_password' => 'required|string|min:8|confirmed',
+            'don_description' => 'nullable|string|max:255',
         ]);
 
         $donor = Donor::create([
@@ -27,20 +26,19 @@ class DonorAuthController extends Controller
             'don_description' => $validated['don_description'] ?? null,
         ]);
 
-        $token = $donor->createToken('api-token', ['post:read', 'post:create'])->plainTextToken;
+        
 
         return response()->json([
             'ok' => true,
             'donor' => $donor,
-            'token' => $token,
-        ]);
+        ], 201);
     }
 
-    public function login(Request $request) {
-
+    public function login(Request $request)
+    {
         $validated = $request->validate([
-            'don_email' => 'required|email:rfc,dns', 
-            'don_password' => 'required|string|min:8', 
+            'don_email' => 'required|email:rfc,dns',
+            'don_password' => 'required|string|min:8',
         ]);
 
         $donor = Donor::where('don_email', $validated['don_email'])->first();
@@ -52,17 +50,16 @@ class DonorAuthController extends Controller
             ], 401);
         }
 
-        $token = $donor->createToken('api-token', ['post:read', 'post:create'])->plainTextToken;
+        $token = $donor->createToken('donor-token', ['donor'])->plainTextToken;
 
         return response()->json([
             'ok' => true,
             'token' => $token,
         ]);
-        
     }
 
-    public function logout(Request $request) {
-
+    public function logout(Request $request)
+    {
         $token = $request->bearerToken();
 
         if (!$token) {
@@ -72,16 +69,16 @@ class DonorAuthController extends Controller
             ], 401);
         }
 
-        $acess_token = PersonalAccessToken::findToken($token);
+        $access_token = PersonalAccessToken::findToken($token);
 
-        if (!$acess_token) {
+        if (!$access_token) {
             return response()->json([
                 'ok' => false,
                 'message' => 'Invalid token.',
             ], 401);
         }
 
-        $acess_token->delete();
+        $access_token->delete();
 
         return response()->json([
             'ok' => true,
