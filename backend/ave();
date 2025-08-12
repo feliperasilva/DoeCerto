@@ -1,0 +1,12 @@
+[90m= [39m[34;4mApp\Models\Ong[39;24m {#6265
+    [34mid[39m: [35m9[39m,
+    [34mong_name[39m: "[32mOngDoida[39m",
+    [34mong_email[39m: "[32mOng@exemplo.com[39m",
+    #[33mong_password[39m: "[32m$2y$12$H65gngFKs2LxoUEek9XFHu645E2XFj1ahOaDqEOACxlHwWwfJKQeW[39m",
+    [34mapproved[39m: [35m0[39m,
+    [34mong_cnpj[39m: "[32m02.828.446/0001-34[39m",
+    [34mong_image[39m: [36mnull[39m,
+    [34mcreated_at[39m: "[32m2025-08-12 23:14:46[39m",
+    [34mupdated_at[39m: "[32m2025-08-12 23:14:46[39m",
+  }
+

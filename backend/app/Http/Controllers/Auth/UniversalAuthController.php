@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Donor;
+use App\Models\Ong;
+use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UniversalAuthController extends Controller
 {
@@ -18,33 +21,41 @@ class UniversalAuthController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
-        // Tenta como donor
-        if (Auth::guard('donor')->attempt(['don_email' => $email, 'don_password' => $password])) {
-            $token = Auth::guard('donor')->user()->createToken('donor-token')->plainTextToken;
+        // Donor
+        $donor = Donor::where('don_email', $email)->first();
+        if ($donor && Hash::check($password, $donor->don_password)) {
+            $token = $donor->createToken('donor-token')->plainTextToken;
             return response()->json([
                 'role'  => 'donor',
                 'token' => $token,
-                'user'  => Auth::guard('donor')->user(),
+                'user'  => $donor,
             ]);
         }
 
-        // Tenta como ong
-        if (Auth::guard('ong')->attempt(['ong_email' => $email, 'ong_password' => $password])) {
-            $token = Auth::guard('ong')->user()->createToken('ong-token')->plainTextToken;
+        // Ong
+        $ong = Ong::where('ong_email', $email)->first();
+        if ($ong && Hash::check($password, $ong->ong_password)) {
+            if (!$ong->approved) {
+                return response()->json([
+                    'message' => 'Sua conta ainda não foi aprovada por um administrador.',
+                ], 403);
+            }
+            $token = $ong->createToken('ong-token')->plainTextToken;
             return response()->json([
                 'role'  => 'ong',
                 'token' => $token,
-                'user'  => Auth::guard('ong')->user(),
+                'user'  => $ong,
             ]);
         }
 
-        // Tenta como admin
-        if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $password])) {
-            $token = Auth::guard('admin')->user()->createToken('admin-token')->plainTextToken;
+        // Admin
+        $admin = Admin::where('email', $email)->first();
+        if ($admin && Hash::check($password, $admin->password)) {
+            $token = $admin->createToken('admin-token')->plainTextToken;
             return response()->json([
                 'role'  => 'admin',
                 'token' => $token,
-                'user'  => Auth::guard('admin')->user(),
+                'user'  => $admin,
             ]);
         }
 

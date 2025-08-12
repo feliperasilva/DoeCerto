@@ -1,13 +1,20 @@
-// frontend/lib/auth.ts
 import axios, { AxiosRequestConfig } from "axios";
 
 const API_BASE_URL = "http://127.0.0.1:8000";
 const TOKEN_KEY = "token";
+const ROLE_KEY = "role";
 
 class AuthService {
   private static get token(): string | null {
     if (typeof window !== "undefined") {
       return localStorage.getItem(TOKEN_KEY);
+    }
+    return null;
+  }
+
+  private static get role(): string | null {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem(ROLE_KEY);
     }
     return null;
   }
@@ -19,7 +26,6 @@ class AuthService {
     },
   });
 
-  // Middleware de injeção de token dinâmico
   private static getAuthHeaders() {
     const token = this.token;
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -46,19 +52,20 @@ class AuthService {
     }
   }
 
-  public static async login(form: { don_email: string; don_password: string }) {
+  // Novo método para login único
+  public static async loginAuto(form: { email: string; password: string }) {
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/api/auth/donor/login`,
-        form
-      );
-      const { token } = response.data;
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, form);
+
+      const { token, role } = response.data;
 
       if (typeof window !== "undefined") {
         localStorage.setItem(TOKEN_KEY, token);
+        localStorage.setItem(ROLE_KEY, role);
       }
 
       this.api.defaults.headers.Authorization = `Bearer ${token}`;
+
       return response.data;
     } catch (error: any) {
       throw error.response?.data?.message || "Erro ao fazer login.";
@@ -67,11 +74,10 @@ class AuthService {
 
   public static async logout() {
     const token = this.token;
-
     if (!token) return;
 
     try {
-      await axios.post(`${API_BASE_URL}/api/auth/donor/logout`, null, {
+      await axios.post(`${API_BASE_URL}/api/logout`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -82,6 +88,7 @@ class AuthService {
 
     if (typeof window !== "undefined") {
       localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(ROLE_KEY);
     }
 
     delete this.api.defaults.headers.Authorization;
@@ -91,6 +98,11 @@ class AuthService {
     return !!this.token;
   }
 
+  public static getRole(): string | null {
+    return this.role;
+  }
+
+  // Pode manter seus métodos específicos, se quiser
   public static async updateDonor(id: string, formData: FormData) {
     try {
       const response = await this.api.post(`/api/donors/${id}`, formData, {
