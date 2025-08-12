@@ -8,6 +8,7 @@ use App\Http\Controllers\OngController;
 use App\Http\Controllers\Auth\OngAuthController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\Auth\AdminAuthController; 
+use App\Http\Controllers\Auth\UniversalAuthController;
 // Rotas Donor
 Route::apiResource('donors', DonorController::class);
 
@@ -43,3 +44,4 @@ Route::prefix('/auth/admin')->group(function () {
 // Rotas protegidas para admins (exemplo: aprovação de ONG)
 Route::middleware('auth:admin')->patch('/ongs/{id}/approve', [OngController::class, 'approve']);
 
+Route::post('/auth/login', [UniversalAuthController::class, 'login']);
