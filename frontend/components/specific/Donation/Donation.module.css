@@ -1,272 +1,275 @@
-.donationContent{
-    display: flex;
-    justify-content: center;
-    overflow-x: hidden;
-    gap: 20px;
-    width: 100%;
-    margin: 0;
-    height: 100%;
-}
-/*Lado esquerdo*/
-.donationLeftBox{
-    display: flex;
-    flex-direction: column;
-    background-color: #f5f5f5;    
-    border-radius: 30px;
-    padding: 15px;
-}
-
-.donationOngImage{
-    width: 180px;
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    border-radius: 15px;
-}
-
-.donationHeaderLeft{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-}
-
-.donationTitleOngLeft{
-    color: #6B39A7;
-    font-size: 55px;
-    font-weight: 900;
-    margin-right: 170px;
-}
-
-.donationParagraphLeft{
-    margin: 0px;
-    font-size: 20px;
-    font-weight: 700; 
-}
-
-.donationButtonFavorite{
-    gap: 5px;
-    display: inline-flex;
-    align-items: center;
-    line-height: 1;
-    margin-top: 20px;
-    border-radius: 15px;
-    padding: 8px 15px;
-    font-size: 18px;
-    font-weight: 600;
-    color: white;
-    border: none;
-    background-color: #6B39A7;
-}
-
-.donationForms{
-    display: flex;
-    flex-direction: column;
-}
-
-.donationPaymentTitle {
-  font-size: 47px;
-  font-weight: 700;
-  margin: 60px 0 12px;
-  color: #333;
-}
-
-.donationPaymentCards {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.paymentCard {
-  background:  #6B39A7;
-  color: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
+.ongcontainer {
+  width: 100%;
+  height: 100%;
+  background: var(--color-background);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
 }
 
-.cardTop{
-    flex-direction: row;
-    gap: 10px;
-    display: inline-flex;
-    align-items: center;
-}
-
-.cardTopP{
-    font-size: 30px;
-    font-weight: bolder;
-}
-
-.paymentButton{
-    margin-top: 25px;
-    display: flex;
-    align-items: flex-end; 
-    gap: 10px;
-}
-
-.paymentIcon {
-  margin-bottom: 8px;
-}
-
-.button1{
-    width: 80px;
-    height: 30px;
-    background-color: #9540FF;
-    border-radius: 5px;
-    border: none;
-}
-
-.button2{
-    width: 150px;
-    height: 40px;
-    background-color: white;
-    border-radius: 5px;
-    border: none;
-
-}
-/*Fim lado esquerdo*/
-/*Lado direito*/
-.donationRightBox{
-    display: flex;
-    flex-direction: column;
-    background-color: #f5f5f5;
-    border-radius: 30px;
-    padding: 5px 25px;
-}
-
-.donationTitleRight{
-    color: #333;
-    font-size: 55px;
-    font-weight: bolder;
-    margin-bottom: 20px;
-}
-
-.donationParagraphRight{
-    color: #333;
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.textIcon:not(:last-child){
-    margin-bottom: 8px;
-}
-
-.textIcon{
-    gap: 15px;
-    display: flex;
-    align-items: center;
-    margin: 25px 0px;
-}
-
-.dataIcon{
-    font-size: 25px;
-}
-
-.donationCategory{
-    display: flex;
-    gap: 10px;
-}
-
-.categories{
-   width: 100px;
-   height: 40px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   border-radius: 8px;
-   font-weight: bold; 
-}
-
-.category{
-    width: 100px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    font-weight: bold; 
-    background-color: #fff;
-}
-
-.hrRow{
-    background-color: #999;
-    height: 2px;
-    margin: 15px 0px;
-}
-/*fim lado direito*/
-
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+.header {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
-}
-
-.modalContent {
-  background-color: white;
-  padding: 24px;
-  border-radius: 20px;
-  width: 400px;
+  width: 100%;
+  background: linear-gradient(to right, #dcb8ff, #ecdbff);
   text-align: center;
-  position: relative;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+  flex: 0.2;
 }
 
-.modalOngData{
+.header h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #4c1d95;
+}
+
+.header span {
+  color: #7c3aed;
+}
+
+.container {
+  border-radius: 0 0 12px 12px;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  flex: 1.1;
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+
+.left {
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  flex: 1.5;
+  padding-top: 0;
+}
+
+.imageContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  background-color: #000;
+  margin-top: 12px;
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.info {
+  display: flex;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.ongname {
+  font-size: 52px;
+  color: var(--color-contrast);
+}
+
+.verified {
+  color: #9333ea;
+}
+
+.rating {
+  font-display: flex;
+  text-align: center;
   align-items: flex-start;
   justify-content: flex-start;
 }
 
-.modalClose {
-  position: absolute;
-  top: 10px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #6B39A7;
-  cursor: pointer;
+.stars {
+  justify-self: flex-start;
+  color: #facc15;
+  font-size: 1.2rem;
 }
 
-.modalTitle {
-  font-size: 24px;
-  color: #6B39A7;
-  margin-bottom: 16px;
-  font-weight: bold;
+.ratingTitle {
+  justify-self: flex-start;
+  font-size: 20px;
+  color: var(--color-contrast);
 }
 
-.qrCode {
-  border: 2px dashed gray;
-  padding: 40px;
-  margin-bottom: 16px;
+.ratingText {
+  justify-self: flex-start;
+  font-size: 0.8rem;
   color: gray;
 }
 
-.modalOngName {
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.modalConfirm {
-  margin-top: 16px;
-  padding: 10px 20px;
-  background-color: #6B39A7;
+.favorite {
+  background: #9333ea;
   color: white;
-  font-weight: bold;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 0.85rem;
   cursor: pointer;
 }
 
+.right {
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 12px;
+  padding-top: 0;
+  justify-content: flex-start;
+}
+
+.aboutHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.backButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  font-size: 36px;
+  background-color: transparent;
+  border: none;
+}
+
+.aboutTitle {
+  font-size: 48px;
+}
+
+.about p {
+  font-size: 20px;
+  color: #374151;
+}
+
+.icons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #9333ea;
+  font-size: 1.2rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tags span {
+  background: #e5e7eb;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+.contribution {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.contributionTitle {
+  font-size: 36px;
+  color: var(--color-contrast);
+}
+
+.cards {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .cards {
+    flex-direction: row;
+  }
+}
+
+.moneyCard,
+.itemsCard {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  justify-content: flex-start;
+  align-items: start;
+  background-color: var(--color-primary);
+  width: 100%;
+}
+
+.moneytitle,
+.itemstitle {
+  font-weight: 700;
+  font-size: 32px;
+  color: white;
+}
+.email,
+.phone,
+.location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.moneyheader,
+.itemsheader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.money,
+.items {
+  background: white;
+  color: var(--color-primary);
+  border: none;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 2rem;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}

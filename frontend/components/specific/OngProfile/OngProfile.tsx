@@ -1,5 +1,10 @@
-import React from 'react';
+import React from "react";
 import styles from "./OngProfile.module.css";
+import StarRating from "../../StarRating";
+import { FaHeart, FaMoneyCheckAlt, FaGift } from "react-icons/fa";
+import { BsPatchCheckFill } from "react-icons/bs";
+import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
+import { IoReturnUpBackOutline } from "react-icons/io5";
 
 export default function SosGatinho() {
   return (
@@ -10,7 +15,9 @@ export default function SosGatinho() {
           <h1>
             SOS Gatinho <span className={styles.verified}></span>
           </h1>
-          <div className={styles.rating}> title="4.0 Muito boa"
+          <div className={styles.rating}>
+            {" "}
+            title="4.0 Muito boa"
             <span className="filled">&#9733;</span>
             <span className="filled">&#9733;</span>
             <span className="filled">&#9733;</span>
@@ -26,7 +33,9 @@ export default function SosGatinho() {
         <div className={styles.about_text}>
           <h3>Sobre a ONG</h3>
           <p>
-            A ONG é dedicada a amparar e transformar a vida dos animais em situação de vulnerabilidade, fornecem lar temporário, até que eles estejam em boa saúde para que sejam o processo de adoção
+            A ONG é dedicada a amparar e transformar a vida dos animais em
+            situação de vulnerabilidade, fornecem lar temporário, até que eles
+            estejam em boa saúde para que sejam o processo de adoção
           </p>
         </div>
       </section>
@@ -57,28 +66,44 @@ export default function SosGatinho() {
         </div>
       </section>
 
-      <section className={styles.sectionaccounts_items} style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+      <section
+        className={styles.sectionaccounts_items}
+        style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}
+      >
         <div className={styles.accounts}>
           <h2>Contas Adicionadas</h2>
-          <p><b>Banco:</b> Banco do Brasil</p>
-          <p><b>Agência:</b> 4364-8</p>
-          <p><b>Conta:</b> 85448-5</p>
+          <p>
+            <b>Banco:</b> Banco do Brasil
+          </p>
+          <p>
+            <b>Agência:</b> 4364-8
+          </p>
+          <p>
+            <b>Conta:</b> 85448-5
+          </p>
         </div>
 
         <div className={styles.items_interest_box}>
           <h2>Itens de interesse</h2>
-          <p><b>Ração</b></p>
-          <p><b>Coleira</b></p>
-          <p><b>Material de limpeza</b></p>
-          <p><b>Papel higiênico</b></p>
+          <p>
+            <b>Ração</b>
+          </p>
+          <p>
+            <b>Coleira</b>
+          </p>
+          <p>
+            <b>Material de limpeza</b>
+          </p>
+          <p>
+            <b>Papel higiênico</b>
+          </p>
         </div>
       </section>
 
-      <section className={styles.sectiondonations_table}> 
-        
-        <table className={styles.tabela}> 
+      <section className={styles.sectiondonations_table}>
+        <table className={styles.tabela}>
           <thead>
-            <tr className={styles.cabecalho}> 
+            <tr className={styles.cabecalho}>
               <th className={styles.linha}>Nome</th>
               <th className={styles.linha}>Data</th>
               <th className={styles.linha}>Tipo</th>
