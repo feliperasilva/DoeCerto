@@ -110,12 +110,20 @@ class OngController extends Controller
         return response()->json(null, 204);
     }
 
-    
+
     public function approve($id)
     {
         $ong = Ong::findOrFail($id);
+
+        if ($ong->approved == 1) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'ONG já está aprovada.'
+            ], 400);
+        }
+
         $ong->approved = 1;
-        $ong->save(); 
+        $ong->save();
 
         return response()->json([
             'ok' => true,
