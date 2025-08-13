@@ -10,7 +10,9 @@ use App\Http\Controllers\DonationController;
 use App\Http\Controllers\Auth\AdminAuthController; 
 use App\Http\Controllers\Auth\UniversalAuthController;
 // Rotas Donor
-Route::apiResource('donors', DonorController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('donors', DonorController::class);
+});
 
 // Rotas de autenticação do Donor
 Route::prefix('/auth/donor')->group(function () {
@@ -44,3 +46,23 @@ Route::prefix('/auth/admin')->group(function () {
 // Rotas protegidas para admins (exemplo: aprovação de ONG)
 Route::middleware('auth:admin')->patch('/ongs/{id}/approve', [OngController::class, 'approve']);
 
+Route::post('/auth/login', [UniversalAuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->get('/auth/me', function (Request $request) {
+    $user = $request->user();
+
+    // Detectar role baseado no modelo da instância do usuário
+    $role = null;
+    if ($user instanceof \App\Models\Donor) {
+        $role = 'donor';
+    } elseif ($user instanceof \App\Models\Ong) {
+        $role = 'ong';
+    } elseif ($user instanceof \App\Models\Admin) {
+        $role = 'admin';
+    }
+
+    return response()->json([
+        'user' => $user,
+        'role' => $role,
+    ]);
+});
