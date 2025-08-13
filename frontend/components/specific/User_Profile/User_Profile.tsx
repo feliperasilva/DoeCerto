@@ -45,21 +45,19 @@ export default function User_Profile() {
   useEffect(() => {
     async function loadUserAndDonations() {
       try {
-        // Pega o usuário autenticado
-        const data = await AuthService.request<User>("/api/auth/donor/me");
-        setUser(data);
+        // Requisição para pegar usuário autenticado
+        const data = await AuthService.request<{ user: User; role: string }>("/api/auth/me");
+        setUser(data.user);
 
         // Inicializa campos para edição
-        setEmail(data.don_email || "");
-        setPhone(data.don_phone || "");
-        setCep(data.don_cep || "");
-        setHouseNumber(data.don_houseNumber || "");
-        setComplement(data.don_complement || "");
+        setEmail(data.user.don_email || "");
+        setPhone(data.user.don_phone || "");
+        setCep(data.user.don_cep || "");
+        setHouseNumber(data.user.don_houseNumber || "");
+        setComplement(data.user.don_complement || "");
 
         // Busca as doações do doador
-        const donationsData = await AuthService.request<Donation[]>(
-          `/api/donations/donor/${data.id}`
-        );
+        const donationsData = await AuthService.request<Donation[]>(`/api/donations/donor/${data.user.id}`);
         setDonations(donationsData);
       } catch (error) {
         console.error("Erro ao carregar usuário ou doações:", error);
@@ -68,13 +66,11 @@ export default function User_Profile() {
     loadUserAndDonations();
   }, []);
 
-  // Fecha o modal e salva alterações
   const handleClose = async () => {
     if (!user) return;
 
     try {
       const formData = new FormData();
-      formData.append("_method", "PUT");
       formData.append("don_email", email);
       formData.append("don_phone", phone);
       formData.append("don_cep", cep);
@@ -82,19 +78,17 @@ export default function User_Profile() {
       formData.append("don_complement", complement);
 
       const response = await AuthService.updateDonor(user.id, formData);
-      setUser(response.data);
+      setUser(response);
       setOpenModal(null);
     } catch (error) {
       console.error("Erro ao atualizar usuário:", error);
     }
   };
 
-  // Dispara o clique no input file escondido
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
 
-  // Upload da imagem do usuário
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0 || !user) return;
 
@@ -102,11 +96,10 @@ export default function User_Profile() {
 
     const formData = new FormData();
     formData.append("don_image", file);
-    formData.append("_method", "PUT");
 
     try {
       const response = await AuthService.updateDonor(user.id, formData);
-      setUser(response.data);
+      setUser(response);
       console.log("Imagem atualizada com sucesso");
     } catch (error) {
       console.error("Erro ao enviar imagem:", error);
@@ -150,44 +143,15 @@ export default function User_Profile() {
           <p style={{ fontSize: 18, marginBottom: 5 }}>
             Cep: {user.don_cep || "não informado"}
           </p>
-          <p
-            style={{
-              display: "flex",
-              alignItems: "center",
-              fontSize: 18,
-              marginBottom: 5,
-            }}
-          >
-            <Image
-              src="/Location.svg"
-              alt="localização"
-              width={20}
-              height={20}
-              style={{ marginRight: 5 }}
-            />
+          <p style={{ display: "flex", alignItems: "center", fontSize: 18, marginBottom: 5 }}>
+            <Image src="/Location.svg" alt="localização" width={20} height={20} style={{ marginRight: 5 }} />
             {user.don_location || "Brasil"}
           </p>
-          <p
-            style={{
-              display: "flex",
-              alignItems: "center",
-              fontSize: 18,
-              marginBottom: 5,
-            }}
-          >
-            <Image
-              src="/clock.svg"
-              alt="relógio"
-              width={20}
-              height={20}
-              style={{ marginRight: 5 }}
-            />
+          <p style={{ display: "flex", alignItems: "center", fontSize: 18, marginBottom: 5 }}>
+            <Image src="/clock.svg" alt="relógio" width={20} height={20} style={{ marginRight: 5 }} />
             Participa desde {user.don_since || "julho de 2025"}
           </p>
-          <button
-            className={styles.editButton}
-            onClick={() => setOpenModal("modal1")}
-          >
+          <button className={styles.editButton} onClick={() => setOpenModal("modal1")}>
             Editar Perfil
           </button>
         </div>
@@ -225,149 +189,84 @@ export default function User_Profile() {
             <tr>
               <th className={styles.headerTable}>Data</th>
               <th className={styles.headerTable}>Tipo</th>
-              <th className={styles.headerTable}>Valor/Item</th>
+              <th className={styles.headerTable}>Valor</th>
               <th className={styles.headerTable}>ONG</th>
             </tr>
           </thead>
           <tbody>
-  {donations.length > 0 ? (
-    donations.map((donation) => {
-      console.log("Doação:", donation);
-      return (
-        <tr key={donation.id}>
-          <td className={styles.rowTable}>
-            {new Date(donation.created_at).toLocaleDateString("pt-BR")}
-          </td>
-          <td className={styles.rowTable}>
-            {donation.donation_type || "Desconhecido"}
-          </td>
-          <td className={styles.rowTable}>
-            {Number(donation.value).toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </td>
-          <td className={styles.rowTable}>
-            {donation.ong?.ong_name || "ONG não informada"}
-          </td>
-        </tr>
-      );
-    })
-  ) : (
-    <tr>
-      <td colSpan={4} className={styles.rowTable}>
-        Nenhuma doação encontrada.
-      </td>
-    </tr>
-  )}
-</tbody>
-
+            {donations.map((donation) => (
+              <tr key={donation.id} className={styles.lineTable}>
+                <td>{new Date(donation.created_at).toLocaleDateString("pt-BR")}</td>
+                <td>{donation.donation_type}</td>
+                <td>
+                  {Number(donation.value).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </td>
+                <td>{donation.ong.ong_name}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
 
-
-      {/* MODAL: Informações pessoais */}
+      {/* Modal para editar perfil */}
       {openModal === "modal1" && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.userInformationModal}>
-            <h1 style={{ marginBottom: 30 }}>Editar Perfil</h1>
-
-            <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="email">
-                E-mail:
-              </label>
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Editar Perfil</h2>
+            <label>
+              Email:
               <input
-                className={styles.inputForms}
-                id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="telefone">
-                Telefone:
-              </label>
+            </label>
+            <label>
+              Telefone:
               <input
-                className={styles.inputForms}
-                id="telefone"
-                type="tel"
+                type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="cep">
-                Cep (opcional):
-              </label>
+            </label>
+            <label>
+              CEP:
               <input
-                className={styles.inputForms}
-                id="cep"
                 type="text"
                 value={cep}
                 onChange={(e) => setCep(e.target.value)}
               />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="numero">
-                Número da Casa (opcional):
-              </label>
+            </label>
+            <label>
+              Número:
               <input
-                className={styles.inputForms}
-                id="numero"
-                type="number"
+                type="text"
                 value={houseNumber}
                 onChange={(e) => setHouseNumber(e.target.value)}
               />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.labelForms} htmlFor="complemento">
-                Complemento:
-              </label>
+            </label>
+            <label>
+              Complemento:
               <input
-                className={styles.inputForms}
-                id="complemento"
                 type="text"
                 value={complement}
                 onChange={(e) => setComplement(e.target.value)}
               />
+            </label>
+
+            <div className={styles.modalButtons}>
+              <button onClick={() => setOpenModal(null)}>Cancelar</button>
+              <button onClick={handleClose}>Salvar</button>
             </div>
-
-            <button onClick={handleClose} className={styles.modalClose}>
-              Salvar Alterações
-            </button>
           </div>
         </div>
       )}
 
-      {/* MODAL 2 e 3 */}
-      {openModal === "modal2" && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.userInformationModal}>
-            <h1>Editar Favoritos</h1>
-            {/* Conteúdo do modal 2 */}
-            <button className={styles.modalClose} onClick={() => setOpenModal(null)}>
-              Fechar
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Modais para outros cards poderiam ser implementados aqui */}
 
-      {openModal === "modal3" && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.userInformationModal}>
-            <h1>Editar Descrição</h1>
-            {/* Conteúdo do modal 3 */}
-            <button className={styles.modalClose} onClick={() => setOpenModal(null)}>
-              Fechar
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 const TOKEN_KEY = "token";
 const ROLE_KEY = "role";
 
@@ -36,23 +36,21 @@ class AuthService {
     options: AxiosRequestConfig = {}
   ): Promise<T> {
     try {
-      const response = await this.api({
+      const response = await AuthService.api({
         url: endpoint,
         method: options.method || "GET",
         data: options.data || null,
         headers: {
-          ...this.getAuthHeaders(),
+          ...AuthService.getAuthHeaders(),
           ...options.headers,
         },
       });
-
       return response.data;
     } catch (error: any) {
       throw error.response?.data?.message || "Erro na requisição.";
     }
   }
 
-  // Novo método para login único
   public static async loginAuto(form: { email: string; password: string }) {
     try {
       const response = await axios.post(`${API_BASE_URL}/api/auth/login`, form);
@@ -64,7 +62,7 @@ class AuthService {
         localStorage.setItem(ROLE_KEY, role);
       }
 
-      this.api.defaults.headers.Authorization = `Bearer ${token}`;
+      AuthService.api.defaults.headers.Authorization = `Bearer ${token}`;
 
       return response.data;
     } catch (error: any) {
@@ -91,7 +89,7 @@ class AuthService {
       localStorage.removeItem(ROLE_KEY);
     }
 
-    delete this.api.defaults.headers.Authorization;
+    delete AuthService.api.defaults.headers.Authorization;
   }
 
   public static isAuthenticated(): boolean {
@@ -102,12 +100,12 @@ class AuthService {
     return this.role;
   }
 
-  // Pode manter seus métodos específicos, se quiser
+  // Atualizar dados do doador (PUT com multipart/form-data)
   public static async updateDonor(id: string, formData: FormData) {
     try {
-      const response = await this.api.post(`/api/donors/${id}`, formData, {
+      const response = await AuthService.api.put(`/api/donors/${id}`, formData, {
         headers: {
-          ...this.getAuthHeaders(),
+          ...AuthService.getAuthHeaders(),
           "Content-Type": "multipart/form-data",
         },
       });

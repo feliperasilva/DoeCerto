@@ -25,23 +25,18 @@ export default function LoginForm() {
     try {
       setAuthError(null);
 
-      // Login automático — backend decide o tipo
       const res = await AuthService.loginAuto({
         email: data.email,
         password: data.password,
       });
 
-      // Redireciona conforme o role que veio do backend
       if (res.role === "donor") router.push("/donor/home");
-      if (res.role === "ong") router.push("/ong/home");
-      if (res.role === "admin") router.push("/admin/dashboard");
+      else if (res.role === "ong") router.push("/ong/home");
+      else if (res.role === "admin") router.push("/admin/dashboard");
+      else setAuthError("Role desconhecida.");
 
     } catch (error: any) {
-      const msg =
-        typeof error === "string"
-          ? error
-          : error?.message || "Erro inesperado ao fazer login.";
-      setAuthError(msg);
+      setAuthError(error || "Erro inesperado ao fazer login.");
     }
   };
 
