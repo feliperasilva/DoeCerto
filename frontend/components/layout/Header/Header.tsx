@@ -5,8 +5,16 @@ import { usePathname, useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 import { Logo } from "@/components";
 import { getHeaderLinks } from "@/lib";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { NavigationLink } from "@/types";
+import AuthService from "@/lib/auth";
+
+interface User {
+  id: string;
+  don_name: string;
+  don_image?: string;
+  // outros campos que precisar
+}
 
 export default function Header() {
   const pathname = usePathname();
@@ -14,17 +22,24 @@ export default function Header() {
   const router = useRouter();
 
   const [loadingLogout, setLoadingLogout] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
-  // Mock do usuário logado
-  const currentUser = {
-    name: "Guilherme Matheus",
-    profilePicture: "https://via.placeholder.com/32",
-  };
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const data = await AuthService.request<{ user: User; role: string }>("/api/auth/me");
+        setUser(data.user);
+      } catch (error) {
+        console.error("Erro ao carregar usuário:", error);
+      }
+    }
+    loadUser();
+  }, []);
 
   const handleLogout = async () => {
     setLoadingLogout(true);
     try {
-      // Aqui iria a lógica de logout real
+      // lógica de logout
       router.push("/login");
     } catch (error) {
       console.error("Erro ao fazer logout:", error);
@@ -45,7 +60,7 @@ export default function Header() {
   );
 
   const shouldShowUserInfo =
-    currentUser && pathname !== "/" && pathname !== "/login";
+    user && pathname !== "/" && pathname !== "/login";
 
   return (
     <header className={styles.header}>
@@ -77,11 +92,15 @@ export default function Header() {
         {shouldShowUserInfo && (
           <div className={styles.userInfo}>
             <img
-              src={currentUser.profilePicture}
-              alt=""
+              src={
+                user?.don_image
+                  ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${user.don_image}`
+                  : "/default-profile.png"
+              }
+              alt={user?.don_name}
               className={styles.userAvatar}
             />
-            <span className={styles.userName}>{currentUser.name}</span>
+            <span className={styles.userName}>{user?.don_name}</span>
             {renderLogoutButton()}
           </div>
         )}

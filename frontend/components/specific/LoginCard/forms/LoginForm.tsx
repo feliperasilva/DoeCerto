@@ -23,20 +23,20 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      const res = await AuthService.login({
-        don_email: data.email,
-        don_password: data.password,
-      });
-
       setAuthError(null);
 
-      router.push("/donor/home");
+      const res = await AuthService.loginAuto({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (res.role === "donor") router.push("/donor/home");
+      else if (res.role === "ong") router.push("/ong/home");
+      else if (res.role === "admin") router.push("/admin/dashboard");
+      else setAuthError("Role desconhecida.");
+
     } catch (error: any) {
-      const msg =
-        error === "The provided credentials are incorrect."
-          ? "Credenciais inválidas. Verifique seu email e senha."
-          : "Erro inesperado ao fazer login.";
-      setAuthError(msg);
+      setAuthError(error || "Erro inesperado ao fazer login.");
     }
   };
 

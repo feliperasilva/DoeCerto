@@ -32,9 +32,10 @@ return [
             'provider' => 'users',
         ],
 
+        // Aqui o guard sanctum padrão usa o provider 'donors'
         'sanctum' => [
             'driver' => 'sanctum',
-            'provider' => 'users',
+            'provider' => 'donors',
         ],
 
         'donor' => [
