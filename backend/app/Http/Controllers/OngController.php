@@ -109,8 +109,7 @@ class OngController extends Controller
 
         return response()->json(null, 204);
     }
-
-
+    
     public function approve($id)
     {
         $ong = Ong::findOrFail($id);
@@ -123,11 +122,39 @@ class OngController extends Controller
         }
 
         $ong->approved = 1;
+        $ong->rejection_reason = null; // Limpa o motivo anterior se houver
         $ong->save();
 
         return response()->json([
             'ok' => true,
             'message' => 'ONG aprovada com sucesso!'
+        ]);
+    }
+
+
+    public function reject(Request $request, $id)
+    {
+        $request->validate([
+            'reason' => 'required|string|max:1000',
+        ]);
+
+        $ong = Ong::findOrFail($id);
+
+        if ($ong->approved == -1) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'ONG já está rejeitada.'
+            ], 400);
+        }
+
+        $ong->approved = -1;
+        $ong->rejection_reason = $request->input('reason');
+        $ong->save();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'ONG rejeitada com sucesso.',
+            'rejection_reason' => $ong->rejection_reason,
         ]);
     }
 }
