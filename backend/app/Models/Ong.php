@@ -23,6 +23,7 @@ class Ong extends Model
         'ong_cnpj',
         'ong_image',
         'approved',
+        'rejection_reason',
     ];
 
     protected $hidden = [
