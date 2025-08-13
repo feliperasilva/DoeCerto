@@ -1,4 +1,4 @@
-import OngProfile  from "@/components/specific/OngProfile";
+import OngProfile from "@/components/specific/OngProfile";
 
 export default function Page() {
   return (
