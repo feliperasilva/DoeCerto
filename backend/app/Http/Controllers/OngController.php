@@ -109,7 +109,7 @@ class OngController extends Controller
 
         return response()->json(null, 204);
     }
-    
+
     public function approve($id)
     {
         $ong = Ong::findOrFail($id);
@@ -122,8 +122,10 @@ class OngController extends Controller
         }
 
         $ong->approved = 1;
-        $ong->rejection_reason = null; // Limpa o motivo anterior se houver
+        $ong->rejection_reason = null;
         $ong->save();
+
+        $ong->tokens()->delete();
 
         return response()->json([
             'ok' => true,
@@ -140,20 +142,23 @@ class OngController extends Controller
 
         $ong = Ong::findOrFail($id);
 
-        if ($ong->approved == -1) {
+        if ($ong->approved == 0) {
             return response()->json([
                 'ok' => false,
-                'message' => 'ONG já está rejeitada.'
+                'message' => 'ONG já está rejeitada.',
             ], 400);
         }
 
-        $ong->approved = -1;
+        $ong->approved = 0; // marca como rejeitada
         $ong->rejection_reason = $request->input('reason');
         $ong->save();
 
+        // Revoga todos os tokens ativos da ONG para invalidar sessões antigas
+        $ong->tokens()->delete();
+
         return response()->json([
             'ok' => true,
-            'message' => 'ONG rejeitada com sucesso.',
+            'message' => 'ONG rejeitada e sessões revogadas com sucesso.',
             'rejection_reason' => $ong->rejection_reason,
         ]);
     }
