@@ -7,18 +7,24 @@ import { Logo } from "@/components";
 import { getHeaderLinks } from "@/lib";
 import { useState } from "react";
 import type { NavigationLink } from "@/types";
-import AuthService from "@/lib/auth";
 
 export default function Header() {
   const pathname = usePathname();
   const links: NavigationLink[] = getHeaderLinks(pathname);
   const router = useRouter();
+
   const [loadingLogout, setLoadingLogout] = useState(false);
+
+  // Mock do usuário logado
+  const currentUser = {
+    name: "Guilherme Matheus",
+    profilePicture: "https://via.placeholder.com/32",
+  };
 
   const handleLogout = async () => {
     setLoadingLogout(true);
     try {
-      await AuthService.logout();
+      // Aqui iria a lógica de logout real
       router.push("/login");
     } catch (error) {
       console.error("Erro ao fazer logout:", error);
@@ -37,6 +43,9 @@ export default function Header() {
       {loadingLogout ? "Saindo..." : "Sair"}
     </button>
   );
+
+  const shouldShowUserInfo =
+    currentUser && pathname !== "/" && pathname !== "/login";
 
   return (
     <header className={styles.header}>
@@ -65,6 +74,17 @@ export default function Header() {
                 </button>
               )
             )}
+        {shouldShowUserInfo && (
+          <div className={styles.userInfo}>
+            <img
+              src={currentUser.profilePicture}
+              alt=""
+              className={styles.userAvatar}
+            />
+            <span className={styles.userName}>{currentUser.name}</span>
+            {renderLogoutButton()}
+          </div>
+        )}
       </nav>
     </header>
   );
