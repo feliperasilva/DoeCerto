@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Ong;
+use App\Models\Admin; 
 use App\Services\CnpjValidatorService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewOngRegistered;
+use App\Mail\OngRegistrationReceived;
 
 class OngAuthController extends Controller
 {
@@ -27,11 +31,18 @@ class OngAuthController extends Controller
         }
 
         $validated['ong_password'] = Hash::make($validated['ong_password']);
-
         $validated['approved'] = false;
         $ong = Ong::create($validated);
 
-        // Token não é criado aqui
+        
+        $admins = Admin::all();
+
+        foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new NewOngRegistered($ong, $admin->name));
+        }
+
+        
+        Mail::to($ong->ong_email)->send(new OngRegistrationReceived());
 
         return response()->json([
             'ok' => true,
