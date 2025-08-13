@@ -86,11 +86,11 @@
   margin-top: 18px;
   justify-content: flex-start;
   width: 100%;
-  /* REMOVA QUALQUER margin-left OU margin-right */
+  
 }
 
 
-
+/*
 .card {
   display: flex;
   flex-direction: column;
@@ -136,7 +136,7 @@
 
 .cardButton:hover {
   background: #5b2791;
-}
+} */
 
 .bestRatedSection {
   margin-top: 48px;
