@@ -44,4 +44,3 @@ Route::prefix('/auth/admin')->group(function () {
 // Rotas protegidas para admins (exemplo: aprovação de ONG)
 Route::middleware('auth:admin')->patch('/ongs/{id}/approve', [OngController::class, 'approve']);
 
-Route::post('/auth/login', [UniversalAuthController::class, 'login']);
