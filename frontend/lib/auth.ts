@@ -100,10 +100,12 @@ class AuthService {
     return this.role;
   }
 
-  // Atualizar dados do doador (PUT com multipart/form-data)
   public static async updateDonor(id: string, formData: FormData) {
     try {
-      const response = await AuthService.api.put(`/api/donors/${id}`, formData, {
+      // Adiciona o "_method=PUT" no FormData
+      formData.append("_method", "PUT");
+  
+      const response = await AuthService.api.post(`/api/donors/${id}`, formData, {
         headers: {
           ...AuthService.getAuthHeaders(),
           "Content-Type": "multipart/form-data",
@@ -114,6 +116,7 @@ class AuthService {
       throw error.response?.data?.message || "Erro ao atualizar doador.";
     }
   }
+  
 }
 
 export default AuthService;

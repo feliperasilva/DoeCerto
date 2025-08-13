@@ -18,6 +18,7 @@ interface User {
   don_since?: string;
   don_description?: string;
   don_image?: string;
+  don_favorites?: string[];
 }
 
 interface Donation {
@@ -36,27 +37,30 @@ export default function User_Profile() {
   const [donations, setDonations] = useState<Donation[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Estados temporários para edição
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [cep, setCep] = useState("");
   const [houseNumber, setHouseNumber] = useState("");
   const [complement, setComplement] = useState("");
+  const [favoritesInput, setFavoritesInput] = useState("");
+  const [descriptionInput, setDescriptionInput] = useState("");
 
   useEffect(() => {
     async function loadUserAndDonations() {
       try {
-        // Requisição para pegar usuário autenticado
         const data = await AuthService.request<{ user: User; role: string }>("/api/auth/me");
         setUser(data.user);
 
-        // Inicializa campos para edição
+        // Inicializa campos de edição
         setEmail(data.user.don_email || "");
         setPhone(data.user.don_phone || "");
         setCep(data.user.don_cep || "");
         setHouseNumber(data.user.don_houseNumber || "");
         setComplement(data.user.don_complement || "");
+        setFavoritesInput(data.user.don_favorites?.join(", ") || "");
+        setDescriptionInput(data.user.don_description || "");
 
-        // Busca as doações do doador
         const donationsData = await AuthService.request<Donation[]>(`/api/donations/donor/${data.user.id}`);
         setDonations(donationsData);
       } catch (error) {
@@ -68,7 +72,6 @@ export default function User_Profile() {
 
   const handleClose = async () => {
     if (!user) return;
-
     try {
       const formData = new FormData();
       formData.append("don_email", email);
@@ -85,6 +88,37 @@ export default function User_Profile() {
     }
   };
 
+  const handleFavoritesSave = async () => {
+    if (!user) return;
+    try {
+      const updatedFavorites = favoritesInput.split(",").map(f => f.trim());
+      const formData = new FormData();
+      formData.append("_method", "PUT");
+      formData.append("don_favorites", JSON.stringify(updatedFavorites));
+
+      const response = await AuthService.updateDonor(user.id, formData);
+      setUser(response);
+      setOpenModal(null);
+    } catch (error) {
+      console.error("Erro ao atualizar favoritos:", error);
+    }
+  };
+
+  const handleDescriptionSave = async () => {
+    if (!user) return;
+    try {
+      const formData = new FormData();
+      formData.append("_method", "PUT");
+      formData.append("don_description", descriptionInput);
+
+      const response = await AuthService.updateDonor(user.id, formData);
+      setUser(response);
+      setOpenModal(null);
+    } catch (error) {
+      console.error("Erro ao atualizar descrição:", error);
+    }
+  };
+
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
@@ -93,7 +127,6 @@ export default function User_Profile() {
     if (!e.target.files || e.target.files.length === 0 || !user) return;
 
     const file = e.target.files[0];
-
     const formData = new FormData();
     formData.append("don_image", file);
 
@@ -211,62 +244,125 @@ export default function User_Profile() {
         </table>
       </div>
 
-      {/* Modal para editar perfil */}
+      {/* MODAL: Informações pessoais */}
       {openModal === "modal1" && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h2>Editar Perfil</h2>
-            <label>
-              Email:
+        <div className={styles.modalOverlay}>
+          <div className={styles.userInformationModal}>
+            <h1 style={{ marginBottom: 30 }}>Editar Perfil</h1>
+
+            <div className={styles.formGroup}>
+              <label className={styles.labelForms} htmlFor="email">
+                E-mail:
+              </label>
               <input
+                className={styles.inputForms}
+                id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </label>
-            <label>
-              Telefone:
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.labelForms} htmlFor="telefone">
+                Telefone:
+              </label>
               <input
-                type="text"
+                className={styles.inputForms}
+                id="telefone"
+                type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-            </label>
-            <label>
-              CEP:
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.labelForms} htmlFor="cep">
+                Cep (opcional):
+              </label>
               <input
+                className={styles.inputForms}
+                id="cep"
                 type="text"
                 value={cep}
                 onChange={(e) => setCep(e.target.value)}
               />
-            </label>
-            <label>
-              Número:
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.labelForms} htmlFor="numero">
+                Número da Casa (opcional):
+              </label>
               <input
-                type="text"
+                className={styles.inputForms}
+                id="numero"
+                type="number"
                 value={houseNumber}
                 onChange={(e) => setHouseNumber(e.target.value)}
               />
-            </label>
-            <label>
-              Complemento:
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.labelForms} htmlFor="complemento">
+                Complemento:
+              </label>
               <input
+                className={styles.inputForms}
+                id="complemento"
                 type="text"
                 value={complement}
                 onChange={(e) => setComplement(e.target.value)}
               />
-            </label>
+            </div>
 
+            <button onClick={handleClose} className={styles.modalClose}>
+              Salvar Alterações
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 2 – Favoritos */}
+      {openModal === "modal2" && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Editar Favoritos</h2>
+            <label>
+              Favoritos (separados por vírgula):
+              <input
+                type="text"
+                value={favoritesInput}
+                onChange={(e) => setFavoritesInput(e.target.value)}
+              />
+            </label>
             <div className={styles.modalButtons}>
               <button onClick={() => setOpenModal(null)}>Cancelar</button>
-              <button onClick={handleClose}>Salvar</button>
+              <button onClick={handleFavoritesSave}>Salvar</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Modais para outros cards poderiam ser implementados aqui */}
-
+      {/* MODAL 3 – Descrição */}
+      {openModal === "modal3" && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Editar Descrição</h2>
+            <label>
+              Descrição:
+              <textarea
+                value={descriptionInput}
+                onChange={(e) => setDescriptionInput(e.target.value)}
+                rows={5}
+              />
+            </label>
+            <div className={styles.modalButtons}>
+              <button onClick={() => setOpenModal(null)}>Cancelar</button>
+              <button onClick={handleDescriptionSave}>Salvar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
