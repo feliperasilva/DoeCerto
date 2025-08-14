@@ -35,9 +35,9 @@ Route::prefix('/auth/ong')->group(function () {
 });
 
 // Rotas de doações
-Route::apiResource('donations', DonationController::class);
-Route::get('donations/donor/{donorId}', [DonationController::class, 'byDonor']);
-Route::get('donations/ong/{ongId}', [DonationController::class, 'byOng']);
+// Route::apiResource('donations', DonationController::class);
+// Route::get('donations/donor/{donorId}', [DonationController::class, 'byDonor']);
+// Route::get('donations/ong/{ongId}', [DonationController::class, 'byOng']);
 
 // Rotas de autenticação do Admin
 Route::prefix('/auth/admin')->group(function () {
@@ -71,4 +71,4 @@ Route::middleware('auth:sanctum')->get('/auth/me', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->get('/donations/item/{ong}', [ItemDonationController::class, 'getWhatsAppLink']);
-
+Route::middleware('auth:sanctum')->get('/donations/money/{ong}', [DonationController::class, 'getWhatsAppLink']);
