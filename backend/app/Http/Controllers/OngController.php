@@ -163,4 +163,24 @@ class OngController extends Controller
             'rejection_reason' => $ong->rejection_reason,
         ]);
     }
+    
+    public function search(Request $request)
+    {
+        $query = $request->query('q');
+
+        $ongs = Ong::where('ong_name', 'LIKE', "%{$query}%")->get();
+
+        if ($ongs->isEmpty()) {
+            return response()->json([
+                'ok' => true,
+                'message' => 'No NGOs found matching your search.',
+                'data' => []
+            ]);
+        }
+
+        return response()->json([
+            'ok' => true,
+            'data' => $ongs
+        ]);
+    }
 }
