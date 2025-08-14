@@ -22,6 +22,8 @@ Route::prefix('/auth/donor')->group(function () {
     Route::post('/logout', [DonorAuthController::class, 'logout']);
 });
 
+Route::get('/ongs/search', [OngController::class, 'search']);
+
 // Rotas ONG
 Route::apiResource('ongs', OngController::class);
 
