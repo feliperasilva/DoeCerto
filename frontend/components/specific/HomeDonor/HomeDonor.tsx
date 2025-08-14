@@ -101,8 +101,10 @@ export default function HomeDonor() {
           {ongs.map((ong, idx) => (
             <OngCard
               key={idx}
+              id={ong.id} // <- id da ONG para o Link
               imagem={ong.ong_image ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${ong.ong_image}` : defaultImage}
               nome={ong.ong_name}
+              nota={ong.nota || 0} // opcional, se você tiver nota
             />
           ))}
         </div>
@@ -117,8 +119,10 @@ export default function HomeDonor() {
           {ongs.map((ong, idx) => (
             <OngCard
               key={idx}
+              id={ong.id} // <- id da ONG
               imagem={ong.ong_image ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${ong.ong_image}` : defaultImage}
               nome={ong.ong_name}
+              nota={ong.nota || 0}
             />
           ))}
         </div>
