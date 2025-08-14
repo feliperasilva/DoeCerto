@@ -70,5 +70,6 @@ Route::middleware('auth:sanctum')->get('/auth/me', function (Request $request) {
     ]);
 });
 
-Route::middleware('auth:sanctum')->get('/donations/item/{ong}', [ItemDonationController::class, 'getWhatsAppLink']);
-
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/donations/item/{ong}', [ItemDonationController::class, 'getWhatsAppLink']);
+});

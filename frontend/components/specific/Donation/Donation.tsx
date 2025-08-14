@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./Donation.module.css";
 import { Tags } from "@/components";
+import auth from "@/lib/auth";
 
 interface Ong {
   id: number;
@@ -12,7 +13,6 @@ interface Ong {
   ong_email: string;
   ong_cnpj: string;
   ong_image?: string;
-  // Campos futuros: telefone, localização, etc.
 }
 
 export default function Donation() {
@@ -20,6 +20,7 @@ export default function Donation() {
   const router = useRouter();
   const [ong, setOng] = useState<Ong | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const defaultImage =
     "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg";
@@ -27,21 +28,32 @@ export default function Donation() {
   useEffect(() => {
     const fetchOng = async () => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/ongs/${params.id}`
-        );
-        if (!res.ok) throw new Error("Erro ao buscar ONG");
-        const data = await res.json();
+        const data = await auth.request(`/api/ongs/${params.id}`);
         setOng(data);
       } catch (error) {
-        console.error(error);
+        console.error("Erro ao buscar ONG:", error);
       } finally {
         setLoading(false);
       }
     };
 
+    setIsAuthenticated(auth.isAuthenticated());
     fetchOng();
   }, [params.id]);
+
+  const handleItemDonation = async () => {
+    try {
+      const data = await auth.request(`/api/donations/item/${params.id}`);
+      if (data.whatsapp_link) {
+        window.open(data.whatsapp_link, "_blank");
+      } else {
+        alert("Link de doação não disponível.");
+      }
+    } catch (error) {
+      alert("Erro ao gerar link de doação.");
+      console.error(error);
+    }
+  };
 
   if (loading) {
     return <div className={styles.ongcontainer}>Carregando ONG...</div>;
@@ -53,20 +65,21 @@ export default function Donation() {
 
   return (
     <div className={styles.ongcontainer}>
-      {/* Título */}
       <div className={styles.header}>
         <h1>
           Já são <span>1.987</span> doações recebidas em 2025
         </h1>
       </div>
 
-      {/* Container Principal */}
       <div className={styles.container}>
-        {/* Lado Esquerdo */}
         <div className={styles.left}>
           <div className={styles.imageContainer}>
             <Image
-              src={ong.ong_image ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${ong.ong_image}` : defaultImage}
+              src={
+                ong.ong_image
+                  ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${ong.ong_image}`
+                  : defaultImage
+              }
               alt={`Foto da ONG ${ong.ong_name}`}
               width={120}
               height={120}
@@ -77,9 +90,11 @@ export default function Donation() {
                 <h2 className={styles.ongname}>{ong.ong_name}</h2>
               </div>
 
-              <button className={styles.favorite}>
-                <span className={styles.heart}>♥</span> Favoritar
-              </button>
+              {isAuthenticated && (
+                <button className={styles.favorite}>
+                  <span className={styles.heart}>♥</span> Favoritar
+                </button>
+              )}
             </div>
           </div>
 
@@ -98,13 +113,18 @@ export default function Donation() {
                   <div className={styles.itemsicon}>🎁</div>
                   <div className={styles.itemstitle}>Doar Itens</div>
                 </div>
-                <button className={styles.items}>Doar</button>
+                <button
+                  className={styles.items}
+                  onClick={handleItemDonation}
+                  disabled={!isAuthenticated}
+                >
+                  {isAuthenticated ? "Doar" : "Faça login para doar"}
+                </button>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Lado Direito */}
         <div className={styles.right}>
           <div className={styles.aboutHeader}>
             <h3 className={styles.aboutTitle}>Sobre a ONG</h3>
@@ -119,8 +139,7 @@ export default function Donation() {
 
           <div className={styles.about}>
             <p>
-              {/* Placeholder até você adicionar a descrição real no banco */}
-              A ONG {ong.ong_name} é dedicada a transformar vidas e causas sociais.  
+              A ONG {ong.ong_name} é dedicada a transformar vidas e causas sociais.
             </p>
           </div>
 
