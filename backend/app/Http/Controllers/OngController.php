@@ -25,6 +25,7 @@ class OngController extends Controller
             'ong_password' => 'required|string|min:8|confirmed',
             'ong_cnpj' => 'required|string|unique:ongs,ong_cnpj',
             'ong_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'ong_phone' => 'nullable|string|max:20',
         ]);
 
         
