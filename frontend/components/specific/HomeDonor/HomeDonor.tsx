@@ -4,91 +4,13 @@ import { Search } from "lucide-react";
 import styles from "./HomeDonor.module.css";
 import OngCard from "@/components/specific/OngCard";
 
-const usuario = {
-  nome: "Guistoso123",
-  foto: "https://randomuser.me/api/portraits/men/32.jpg",
-};
-
-const ongs = [
-  {
-    nome: "SOS Gatinho",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    
-  },
-  {
-    nome: "Vozes da Terra",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    
-  },
-  {
-    nome: "Laços de Esperança",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    
-  },
-  {
-    nome: "Casa Viva",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    
-  },
-  {
-    nome: "Mar Azul",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    
-  },
-  {
-    nome: "TecnoSocial",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    
-  },
-  {
-    nome: "Mãos que Ajudam",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    
-  },
-];
-
-const melhores = [
-  {
-    nome: "Caminhos Livres",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    estrelas: 5,
-  },
-  {
-    nome: "Tecendo Futuros",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    estrelas: 5,
-  },
-  {
-    nome: "Rede Horizonte Azul",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    estrelas: 4,
-  },
-  {
-    nome: "Luz para o Saber",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    estrelas: 5,
-  },
-  {
-    nome: "Futebol de Rua",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    estrelas: 5,
-  },
-  {
-    nome: "Raízes do Amanhã",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    estrelas: 5,
-  },
-  {
-    nome: "Laço Rosa Livre",
-    img: "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg",
-    estrelas: 5,
-  },
-];
-
 export default function HomeDonor() {
+  const [ongs, setOngs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const filterRef = useRef<HTMLDivElement>(null);
+
   const categories = [
     "Animais",
     "Causas Sociais",
@@ -97,6 +19,26 @@ export default function HomeDonor() {
     "Meio Ambiente",
     "Saúde",
   ];
+
+  const defaultImage =
+    "https://outraspalavras.net/wp-content/uploads/2024/10/WhatsApp-Image-2021-09-18-at-10.38.48.jpeg";
+
+  useEffect(() => {
+    const fetchOngs = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ongs`);
+        if (!res.ok) throw new Error("Erro ao buscar ONGs");
+        const data = await res.json();
+        setOngs(data);
+      } catch (error) {
+        console.error("Erro ao buscar ONGs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOngs();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -111,6 +53,10 @@ export default function HomeDonor() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  if (loading) {
+    return <div className={styles.container}>Carregando ONGs...</div>;
+  }
+
   return (
     <div className={styles.container}>
       {/* Barra de busca */}
@@ -120,7 +66,7 @@ export default function HomeDonor() {
           <input
             type="text"
             className={styles.search}
-            placeholder="SOS Gatinho"
+            placeholder="Buscar ONG..."
           />
         </div>
         <div className={styles.filterWrapper} ref={filterRef}>
@@ -155,24 +101,29 @@ export default function HomeDonor() {
           {ongs.map((ong, idx) => (
             <OngCard
               key={idx}
-              imagem={ong.img}
-              nome={ong.nome} />
+              id={ong.id} // <- id da ONG para o Link
+              imagem={ong.ong_image ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${ong.ong_image}` : defaultImage}
+              nome={ong.ong_name}
+              nota={ong.nota || 0} // opcional, se você tiver nota
+            />
           ))}
         </div>
       </div>
 
-      {/* MELHOR AVALIAÇÃO */}
+      {/* MELHOR AVALIAÇÃO (mesmo conteúdo por enquanto) */}
       <div>
         <div className={styles.nearyouong}>
           <h1>Melhor Avaliação</h1>
         </div>
         <div className={styles.cards}>
-          {melhores.map((ong, idx) => (
+          {ongs.map((ong, idx) => (
             <OngCard
               key={idx}
-              imagem={ong.img}
-              nome={ong.nome}
-              nota={ong.estrelas ?? 4} />
+              id={ong.id} // <- id da ONG
+              imagem={ong.ong_image ? `${process.env.NEXT_PUBLIC_API_URL}/storage/${ong.ong_image}` : defaultImage}
+              nome={ong.ong_name}
+              nota={ong.nota || 0}
+            />
           ))}
         </div>
       </div>
