@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\OngAuthController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\Auth\AdminAuthController; 
 use App\Http\Controllers\Auth\UniversalAuthController;
+use App\Http\Controllers\ItemDonationController;
 // Rotas Donor
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('donors', DonorController::class);
@@ -66,3 +67,6 @@ Route::middleware('auth:sanctum')->get('/auth/me', function (Request $request) {
         'role' => $role,
     ]);
 });
+
+Route::middleware('auth:sanctum')->get('/donations/item/{ong}', [ItemDonationController::class, 'getWhatsAppLink']);
+
