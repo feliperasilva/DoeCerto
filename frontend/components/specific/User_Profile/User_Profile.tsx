@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import styles from "./User_Profile.module.css";
 import { FaPencilAlt, FaStar } from "react-icons/fa";
 import Image from "next/image";
-import AuthService from "@/lib/auth";
+{/*import AuthService from "@/lib/auth";*/}
 
 interface User {
   id: string;
@@ -49,7 +49,7 @@ export default function User_Profile() {
   useEffect(() => {
     async function loadUserAndDonations() {
       try {
-        const data = await AuthService.request<{ user: User; role: string }>("/api/auth/me");
+        {/*const data = await AuthService.request<{ user: User; role: string }>("/api/auth/me");
         setUser(data.user);
 
         // Inicializa campos de edição
@@ -62,7 +62,7 @@ export default function User_Profile() {
         setDescriptionInput(data.user.don_description || "");
 
         const donationsData = await AuthService.request<Donation[]>(`/api/donations/donor/${data.user.id}`);
-        setDonations(donationsData);
+        setDonations(donationsData);*/}
       } catch (error) {
         console.error("Erro ao carregar usuário ou doações:", error);
       }
@@ -73,7 +73,7 @@ export default function User_Profile() {
   const handleClose = async () => {
     if (!user) return;
     try {
-      const formData = new FormData();
+      {/*const formData = new FormData();
       formData.append("don_email", email);
       formData.append("don_phone", phone);
       formData.append("don_cep", cep);
@@ -82,64 +82,64 @@ export default function User_Profile() {
 
       const response = await AuthService.updateDonor(user.id, formData);
       setUser(response);
-      setOpenModal(null);
+      setOpenModal(null);*/}
     } catch (error) {
       console.error("Erro ao atualizar usuário:", error);
     }
   };
 
   const handleFavoritesSave = async () => {
-    if (!user) return;
+    // if (!user) return;
     try {
-      const updatedFavorites = favoritesInput.split(",").map(f => f.trim());
+      {/*const updatedFavorites = favoritesInput.split(",").map(f => f.trim());
       const formData = new FormData();
       formData.append("_method", "PUT");
       formData.append("don_favorites", JSON.stringify(updatedFavorites));
 
       const response = await AuthService.updateDonor(user.id, formData);
       setUser(response);
-      setOpenModal(null);
+      setOpenModal(null);*/}
     } catch (error) {
       console.error("Erro ao atualizar favoritos:", error);
     }
   };
 
   const handleDescriptionSave = async () => {
-    if (!user) return;
+    // if (!user) return;
     try {
-      const formData = new FormData();
+      {/*const formData = new FormData();
       formData.append("_method", "PUT");
       formData.append("don_description", descriptionInput);
 
       const response = await AuthService.updateDonor(user.id, formData);
       setUser(response);
-      setOpenModal(null);
+      setOpenModal(null);*/}
     } catch (error) {
       console.error("Erro ao atualizar descrição:", error);
     }
   };
 
   const handleImageClick = () => {
-    fileInputRef.current?.click();
+    
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files || e.target.files.length === 0 || !user) return;
+    // if (!e.target.files || e.target.files.length === 0 || !user) return;
 
-    const file = e.target.files[0];
+    // const file = e.target.files[0];
     const formData = new FormData();
-    formData.append("don_image", file);
+    // formData.append("don_image", file);
 
     try {
-      const response = await AuthService.updateDonor(user.id, formData);
+      {/*const response = await AuthService.updateDonor(user.id, formData);
       setUser(response);
-      console.log("Imagem atualizada com sucesso");
+      console.log("Imagem atualizada com sucesso");*/}
     } catch (error) {
       console.error("Erro ao enviar imagem:", error);
     }
   };
 
-  if (!user) return <p>Carregando perfil...</p>;
+  // if (!user) return <p>Carregando perfil...</p>;
 
   return (
     <div className={styles.container}>
@@ -149,18 +149,11 @@ export default function User_Profile() {
         <div
           className={styles.userPhoto}
           onClick={handleImageClick}
-          style={{
-            cursor: "pointer",
-            backgroundImage: user.don_image
-              ? `url(${process.env.NEXT_PUBLIC_API_URL}/storage/${user.don_image})`
-              : "url(/default-profile.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          
         ></div>
 
         <input
-          ref={fileInputRef}
+          
           type="file"
           accept="image/*"
           style={{ display: "none" }}
@@ -172,17 +165,17 @@ export default function User_Profile() {
 
       <div className={styles.content}>
         <div className={styles.userData}>
-          <h1 className={styles.userName}>{user.don_name}</h1>
+          <h1 className={styles.userName}>{}</h1>
           <p style={{ fontSize: 18, marginBottom: 5 }}>
-            Cep: {user.don_cep || "não informado"}
+            Cep: {}
           </p>
           <p style={{ display: "flex", alignItems: "center", fontSize: 18, marginBottom: 5 }}>
             <Image src="/Location.svg" alt="localização" width={20} height={20} style={{ marginRight: 5 }} />
-            {user.don_location || "Brasil"}
+            {}
           </p>
           <p style={{ display: "flex", alignItems: "center", fontSize: 18, marginBottom: 5 }}>
             <Image src="/clock.svg" alt="relógio" width={20} height={20} style={{ marginRight: 5 }} />
-            Participa desde {user.don_since || "julho de 2025"}
+            Participa desde {}
           </p>
           <button className={styles.editButton} onClick={() => setOpenModal("modal1")}>
             Editar Perfil
